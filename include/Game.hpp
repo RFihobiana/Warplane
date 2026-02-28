@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Time.hpp>
 
@@ -15,4 +16,5 @@ class Game {
     
     private:
         sf::RenderWindow m_window;
+        sf::CircleShape m_player;
 };

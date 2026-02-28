@@ -2,6 +2,8 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
@@ -20,7 +22,9 @@ class Game {
     
     private:
         sf::RenderWindow m_window;
-        sf::CircleShape m_player;
+
+        sf::Texture m_texture;
+        sf::Sprite m_player;
 
         float m_player_speed;
         

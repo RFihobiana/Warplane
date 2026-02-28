@@ -1,4 +1,3 @@
-
 #include "Game.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
@@ -12,7 +11,8 @@
 
 Game::Game()
 : m_window(sf::VideoMode(1024, 940), "War Plane")
-, m_player(32)
+, m_texture()
+, m_player()
 , m_player_speed(250.f)
 
 // Player Directions
@@ -21,13 +21,13 @@ Game::Game()
 , m_is_moving_right(false)
 , m_is_moving_left(false) {
 
+    m_texture.loadFromFile("./assets/images/Eagle.png");
+    m_player.setTexture(m_texture);
+
     // Spawn player at the center
     const sf::FloatRect bounds(m_player.getLocalBounds());
     m_player.setOrigin(bounds.width / 2, bounds.height / 2);
     m_player.setPosition(sf::Vector2f(m_window.getSize()) / 2.f);
-
-    // Player color
-    m_player.setFillColor(sf::Color::Green);
 }
 
 void Game::run() {

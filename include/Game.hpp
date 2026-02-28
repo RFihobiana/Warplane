@@ -3,6 +3,7 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Time.hpp>
+#include <SFML/Window/Keyboard.hpp>
 
 class Game {
     public:
@@ -13,8 +14,16 @@ class Game {
         void process_events();
         void update(sf::Time dt);
         void draw();
+
+        // Player movements
+        void handle_player_inputs(const sf::Keyboard::Key& key, const bool& is_pressed);
     
     private:
         sf::RenderWindow m_window;
         sf::CircleShape m_player;
+
+        bool m_is_moving_up;
+        bool m_is_moving_down;
+        bool m_is_moving_right;
+        bool m_is_moving_left;
 };

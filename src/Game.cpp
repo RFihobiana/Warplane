@@ -8,6 +8,7 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
+#include <string>
 
 Game::Game()
 : m_window(sf::VideoMode(1024, 940), "War Plane")
@@ -19,7 +20,11 @@ Game::Game()
 , m_is_moving_up(false)
 , m_is_moving_down(false)
 , m_is_moving_right(false)
-, m_is_moving_left(false) {
+, m_is_moving_left(false)
+
+// Static text
+, m_font()
+, m_text("FPS: 0", m_font) {
 
     m_texture.loadFromFile("./assets/images/Eagle.png");
     m_player.setTexture(m_texture);
@@ -28,12 +33,14 @@ Game::Game()
     const sf::FloatRect bounds(m_player.getLocalBounds());
     m_player.setOrigin(bounds.width / 2, bounds.height / 2);
     m_player.setPosition(sf::Vector2f(m_window.getSize()) / 2.f);
+
+    m_font.loadFromFile("./assets/fonts/Sansation.ttf");
 }
 
 void Game::run() {
     sf::Clock clock;
     sf::Time fps(sf::seconds(1 / 60.f)), time_since_last_update(sf::Time::Zero);
-
+    
     while(m_window.isOpen()) {
         for(
             time_since_last_update += clock.restart();
@@ -42,6 +49,7 @@ void Game::run() {
         ) {
             process_events();
             update(fps);
+            update_static_texts(fps);
         }
         
         process_events();
@@ -85,10 +93,29 @@ void Game::update(sf::Time dt) {
     m_player.move(velocity * dt.asSeconds());
 }
 
+void Game::update_static_texts(sf::Time dt) {
+    static sf::Time elapsed_time(sf::Time::Zero);
+    static long long frame_count = 0, last_frame_count = 0;
+
+    elapsed_time += dt;
+    
+    if(elapsed_time >= sf::seconds(1.f)) {
+        // Update fps resulted value for the screen and reset counters 
+        last_frame_count = frame_count;
+        elapsed_time = sf::Time::Zero;
+        frame_count = 0;
+    } else {
+        frame_count++;
+    }
+
+    m_text.setString("FPS: " + std::to_string(last_frame_count));
+}
+
 void Game::draw() {
     m_window.clear();
 
     m_window.draw(m_player);
+    m_window.draw(m_text);
 
     m_window.display();
 }

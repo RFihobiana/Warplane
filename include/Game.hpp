@@ -22,6 +22,8 @@ class Game {
         sf::RenderWindow m_window;
         sf::CircleShape m_player;
 
+        float m_player_speed;
+        
         bool m_is_moving_up;
         bool m_is_moving_down;
         bool m_is_moving_right;

@@ -2,6 +2,7 @@
 #include "Game.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
+#include <SFML/System/Clock.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window.hpp>
@@ -12,6 +13,7 @@
 Game::Game()
 : m_window(sf::VideoMode(1024, 940), "War Plane")
 , m_player(32)
+, m_player_speed(250.f)
 
 // Player Directions
 , m_is_moving_up(false)
@@ -29,10 +31,20 @@ Game::Game()
 }
 
 void Game::run() {
-    sf::Time fps(sf::seconds(1 / 24.f));
+    sf::Clock clock;
+    sf::Time fps(sf::seconds(1 / 60.f)), time_since_last_update(sf::Time::Zero);
+
     while(m_window.isOpen()) {
+        for(
+            time_since_last_update += clock.restart();
+            time_since_last_update > fps;
+            time_since_last_update -= fps
+        ) {
+            process_events();
+            update(fps);
+        }
+        
         process_events();
-        update(fps);
         draw();
     }
 }
@@ -65,10 +77,10 @@ void Game::handle_player_inputs(const sf::Keyboard::Key& key, const bool& is_pre
 void Game::update(sf::Time dt) {
     sf::Vector2f velocity;
     
-    if(m_is_moving_up)     velocity.y -= 1.f;
-    if(m_is_moving_down)   velocity.y += 1.f;
-    if(m_is_moving_left)   velocity.x -= 1.f;
-    if(m_is_moving_right)  velocity.x += 1.f;
+    if(m_is_moving_up)     velocity.y -= m_player_speed;
+    if(m_is_moving_down)   velocity.y += m_player_speed;
+    if(m_is_moving_left)   velocity.x -= m_player_speed;
+    if(m_is_moving_right)  velocity.x += m_player_speed;
 
     m_player.move(velocity * dt.asSeconds());
 }

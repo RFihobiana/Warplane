@@ -8,13 +8,22 @@
 #include <utility>
 
 template<typename ResourceID, typename Resource>
-void ResourceHolder<ResourceID, Resource>::load(const ResourceID id, const std::string& filename) {
+void ResourceHolder<ResourceID, Resource>::load(const ResourceID& id, const std::string& filename) {
     std::unique_ptr<Resource> resource(new Resource());
     if(!resource->loadFromFile(filename)) {
         throw std::runtime_error("ResourceHolder::load - Failed to load " + filename);
     }
     auto inserted = m_data.insert(std::make_pair(id, std::move(resource)));
     assert(inserted.second);
+}
+
+template<typename ResourceID, typename Resource>
+template<typename Parameter>
+void ResourceHolder<ResourceID, Resource>::load(const ResourceID& id, const std::string& filename, const Parameter& second_param) {
+    std::unique_ptr<Resource> resource(new Resource());
+    if(!resource->loadFromFile(filename, second_param)) {
+        throw std::runtime_error("ResourceHolder::load - Failed to load " + filename);
+    }
 }
 
 template<typename ResourceID, typename Resource>

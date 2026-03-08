@@ -1,4 +1,5 @@
 #pragma once
+#include "textures/ResourceIdentifier.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Font.hpp>
@@ -15,6 +16,8 @@ class Game {
         void run();
 
     private:
+        void load_resources();
+
         void process_events();
         void update(sf::Time dt);
         void draw();
@@ -27,8 +30,7 @@ class Game {
     private:
         sf::RenderWindow m_window;
 
-        sf::Texture m_texture;
-        sf::Sprite m_player;
+        sf::Sprite m_player, m_background;
 
         float m_player_speed;
         
@@ -37,6 +39,8 @@ class Game {
         bool m_is_moving_right;
         bool m_is_moving_left;
 
-        sf::Font m_font;
         sf::Text m_text;
+
+        TextureHolder   m_texture_holder;
+        FontHolder      m_font_holder;
 };

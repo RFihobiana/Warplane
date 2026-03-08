@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "textures/ResourceIdentifier.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Clock.hpp>
@@ -11,9 +12,9 @@
 #include <string>
 
 Game::Game()
-: m_window(sf::VideoMode(1024, 940), "War Plane")
-, m_texture()
+: m_window(sf::VideoMode(1240, 940), "War Plane")
 , m_player()
+, m_background()
 , m_player_speed(250.f)
 
 // Player Directions
@@ -23,18 +24,36 @@ Game::Game()
 , m_is_moving_left(false)
 
 // Static text
-, m_font()
-, m_text("FPS: 0", m_font) {
+, m_text() {
+    load_resources();
 
-    m_texture.loadFromFile("./assets/images/Eagle.png");
-    m_player.setTexture(m_texture);
+    m_player.setTexture(m_texture_holder.get(Textures::Eagle));
+    m_background.setTexture(m_texture_holder.get(Textures::Landscape));
+
+    // Scale backgroud image respectively to screen size
+    auto bg_bounds = m_background.getLocalBounds();
+    auto win_size = m_window.getSize();
+    m_background.setScale(sf::Vector2f(
+        win_size.x / bg_bounds.width,
+        win_size.y / bg_bounds.height
+    ));
 
     // Spawn player at the center
     const sf::FloatRect bounds(m_player.getLocalBounds());
     m_player.setOrigin(bounds.width / 2, bounds.height / 2);
     m_player.setPosition(sf::Vector2f(m_window.getSize()) / 2.f);
 
-    m_font.loadFromFile("./assets/fonts/Sansation.ttf");
+    // Setup fonts
+    m_text.setFont(m_font_holder.get(Fonts::main));
+}
+
+void Game::load_resources() {
+    // Textures
+    m_texture_holder.load(Textures::Eagle, "./assets/images/Eagle.png");
+    m_texture_holder.load(Textures::Landscape, "./assets/images/Desert.png");
+
+    // Fonts
+    m_font_holder.load(Fonts::main, "./assets/fonts/Sansation.ttf");
 }
 
 void Game::run() {
@@ -114,6 +133,7 @@ void Game::update_static_texts(sf::Time dt) {
 void Game::draw() {
     m_window.clear();
 
+    m_window.draw(m_background);
     m_window.draw(m_player);
     m_window.draw(m_text);
 

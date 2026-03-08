@@ -3,6 +3,8 @@
 
 A 2D warplane game developed with SFML (Simple and Fast Multimedia Library) in C++.
 
+![Game Screen](./assets/images/preview/game_screen.png)
+
 ## Features
 
 - Player-controlled warplane

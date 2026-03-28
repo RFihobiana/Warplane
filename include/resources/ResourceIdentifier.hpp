@@ -1,6 +1,6 @@
 #pragma once
 
-#include "textures/ResourceHolder.hpp"
+#include "resources/ResourceHolder.hpp"
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/Texture.hpp>
 namespace Textures {

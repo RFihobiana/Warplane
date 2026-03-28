@@ -1,5 +1,5 @@
 #include "Game.hpp"
-#include "textures/ResourceIdentifier.hpp"
+#include "resources/ResourceIdentifier.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/System/Clock.hpp>

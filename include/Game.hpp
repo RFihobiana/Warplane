@@ -1,5 +1,5 @@
 #pragma once
-#include "textures/ResourceIdentifier.hpp"
+#include "resources/ResourceIdentifier.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/Font.hpp>

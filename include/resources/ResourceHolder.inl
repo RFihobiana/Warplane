@@ -1,6 +1,6 @@
 #pragma once
 
-#include "textures/ResourceHolder.hpp"
+#include "resources/ResourceHolder.hpp"
 #include <cassert>
 #include <memory>
 #include <stdexcept>

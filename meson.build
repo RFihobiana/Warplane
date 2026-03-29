@@ -5,7 +5,10 @@ project(
 
 sources = files(
     'src/main.cpp',
-    'src/Game.cpp'
+    'src/Game.cpp',
+
+    'src/entity/Entity.cpp',
+    'src/entity/Aircraft',
 )
 
 executable(

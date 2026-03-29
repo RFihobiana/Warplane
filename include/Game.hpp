@@ -1,4 +1,6 @@
 #pragma once
+#include "SceneNode.hpp"
+#include "entity/Aircraft.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
@@ -29,8 +31,13 @@ class Game {
     
     private:
         sf::RenderWindow m_window;
+        
+        TextureHolder   m_textures;
+        FontHolder      m_font_holder;
 
-        sf::Sprite m_player, m_background;
+        sf::Sprite m_background;
+        SceneNode* m_player;
+        SceneNode m_scene_graph;
 
         float m_player_speed;
         
@@ -40,7 +47,4 @@ class Game {
         bool m_is_moving_left;
 
         sf::Text m_text;
-
-        TextureHolder   m_texture_holder;
-        FontHolder      m_font_holder;
 };

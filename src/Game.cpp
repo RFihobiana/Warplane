@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "entity/Aircraft.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
@@ -10,11 +11,15 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
 #include <string>
+#include <utility>
 
 Game::Game()
 : m_window(sf::VideoMode(1240, 940), "War Plane")
-, m_player()
+
 , m_background()
+, m_player(nullptr)
+, m_scene_graph()
+
 , m_player_speed(250.f)
 
 // Player Directions
@@ -27,8 +32,15 @@ Game::Game()
 , m_text() {
     load_resources();
 
-    m_player.setTexture(m_texture_holder.get(Textures::Eagle));
-    m_background.setTexture(m_texture_holder.get(Textures::Landscape));
+    
+    // Add player aircraft
+    Aircraft::Ptr aircraft(new Aircraft(Aircraft::Eagle, m_textures));
+    aircraft->setPosition(sf::Vector2f(m_window.getView().getSize()) / 2.f);
+    m_player = aircraft.get();
+    m_scene_graph.attach_child(std::move(aircraft));
+
+    // BACKGROUND
+    m_background.setTexture(m_textures.get(Textures::Landscape));
 
     // Scale backgroud image respectively to screen size
     auto bg_bounds = m_background.getLocalBounds();
@@ -38,19 +50,15 @@ Game::Game()
         win_size.y / bg_bounds.height
     ));
 
-    // Spawn player at the center
-    const sf::FloatRect bounds(m_player.getLocalBounds());
-    m_player.setOrigin(bounds.width / 2, bounds.height / 2);
-    m_player.setPosition(sf::Vector2f(m_window.getSize()) / 2.f);
-
     // Setup fonts
     m_text.setFont(m_font_holder.get(Fonts::main));
 }
 
 void Game::load_resources() {
     // Textures
-    m_texture_holder.load(Textures::Eagle, "./assets/images/Eagle.png");
-    m_texture_holder.load(Textures::Landscape, "./assets/images/Desert.png");
+    m_textures.load(Textures::Eagle, "./assets/images/Eagle.png");
+    m_textures.load(Textures::Raptor, "./assets/images/Raptor.png");
+    m_textures.load(Textures::Landscape, "./assets/images/Desert.png");
 
     // Fonts
     m_font_holder.load(Fonts::main, "./assets/fonts/Sansation.ttf");
@@ -109,7 +117,7 @@ void Game::update(sf::Time dt) {
     if(m_is_moving_left)   velocity.x -= m_player_speed;
     if(m_is_moving_right)  velocity.x += m_player_speed;
 
-    m_player.move(velocity * dt.asSeconds());
+    m_player->move(velocity * dt.asSeconds());
 }
 
 void Game::update_static_texts(sf::Time dt) {
@@ -134,7 +142,7 @@ void Game::draw() {
     m_window.clear();
 
     m_window.draw(m_background);
-    m_window.draw(m_player);
+    m_window.draw(m_scene_graph);
     m_window.draw(m_text);
 
     m_window.display();

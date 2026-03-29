@@ -6,9 +6,11 @@ project(
 sources = files(
     'src/main.cpp',
     'src/Game.cpp',
+    'src/utilities.cpp',
+    'src/SceneNode.cpp',
 
     'src/entity/Entity.cpp',
-    'src/entity/Aircraft',
+    'src/entity/Aircraft.cpp',
 )
 
 executable(

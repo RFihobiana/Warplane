@@ -20,14 +20,6 @@ Game::Game()
 , m_player(nullptr)
 , m_scene_graph()
 
-, m_player_speed(250.f)
-
-// Player Directions
-, m_is_moving_up(false)
-, m_is_moving_down(false)
-, m_is_moving_right(false)
-, m_is_moving_left(false)
-
 // Static text
 , m_text() {
     load_resources();
@@ -103,22 +95,13 @@ void Game::process_events() {
 }
 
 void Game::handle_player_inputs(const sf::Keyboard::Key& key, const bool& is_pressed) {
-    if(key == sf::Keyboard::W)      m_is_moving_up      = is_pressed;
-    else if(key == sf::Keyboard::S) m_is_moving_down    = is_pressed;
-    else if(key == sf::Keyboard::A) m_is_moving_left    = is_pressed;
-    else if(key == sf::Keyboard::D) m_is_moving_right   = is_pressed;
+    if(key == sf::Keyboard::W)      m_player->move_up(is_pressed);
+    else if(key == sf::Keyboard::S) m_player->move_down(is_pressed);
+    else if(key == sf::Keyboard::D) m_player->move_right(is_pressed);
+    else if(key == sf::Keyboard::A) m_player->move_left(is_pressed);
 }
 
 void Game::update(sf::Time& dt) {
-    sf::Vector2f velocity;
-    
-    if(m_is_moving_up)     velocity.y -= m_player_speed;
-    if(m_is_moving_down)   velocity.y += m_player_speed;
-    if(m_is_moving_left)   velocity.x -= m_player_speed;
-    if(m_is_moving_right)  velocity.x += m_player_speed;
-
-    m_player->move(velocity * dt.asSeconds());
-
     m_scene_graph.update(dt);
 }
 

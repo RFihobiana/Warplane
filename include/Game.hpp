@@ -43,15 +43,10 @@ class Game {
         FontHolder      m_font_holder;
 
         sf::Sprite m_background;
-        SceneNode* m_player;
+        Aircraft* m_player;
         SceneNode m_scene_graph;
 
         float m_player_speed;
-        
-        bool m_is_moving_up;
-        bool m_is_moving_down;
-        bool m_is_moving_right;
-        bool m_is_moving_left;
 
         sf::Text m_text;
 };

@@ -1,7 +1,9 @@
 #include "SceneNode.hpp"
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Transform.hpp>
 #include <SFML/System/Time.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <cassert>
 #include <utility>
 #include <algorithm>
@@ -50,3 +52,17 @@ void SceneNode::update_children(sf::Time& dt) {
         child->update(dt);
     }
 }
+
+sf::Transform SceneNode::get_world_transform() const {
+    sf::Transform transform(sf::Transform::Identity);
+
+    for(const SceneNode* node = this; node != nullptr; node = node->m_parent)
+        transform = node->getTransform() * transform;
+
+    return transform;
+}
+
+sf::Vector2f SceneNode::get_world_position() const {
+    return get_world_transform() * sf::Vector2f();
+}
+

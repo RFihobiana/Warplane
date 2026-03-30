@@ -3,9 +3,11 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Graphics/Transform.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/System/NonCopyable.hpp>
 #include <SFML/System/Time.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <memory>
 #include <vector>
 #include <SFML/Graphics.hpp>
@@ -20,6 +22,9 @@ class SceneNode: public sf::Drawable, public sf::Transformable, private sf::NonC
         Ptr dettach_child(const SceneNode& node);
 
         void update(sf::Time& dt);
+
+        sf::Transform   get_world_transform()   const;
+        sf::Vector2f    get_world_position()    const;
 
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates) const ;

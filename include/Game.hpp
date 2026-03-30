@@ -21,13 +21,20 @@ class Game {
         void load_resources();
 
         void process_events();
-        void update(sf::Time dt);
+        void update(sf::Time& dt);
         void draw();
 
         // Player movements
         void handle_player_inputs(const sf::Keyboard::Key& key, const bool& is_pressed);
 
         void update_static_texts(sf::Time dt);
+    
+    private:
+        enum Layers {
+            Background,
+            Air,
+            LayourCount,
+        };
     
     private:
         sf::RenderWindow m_window;

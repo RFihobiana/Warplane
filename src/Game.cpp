@@ -109,7 +109,7 @@ void Game::handle_player_inputs(const sf::Keyboard::Key& key, const bool& is_pre
     else if(key == sf::Keyboard::D) m_is_moving_right   = is_pressed;
 }
 
-void Game::update(sf::Time dt) {
+void Game::update(sf::Time& dt) {
     sf::Vector2f velocity;
     
     if(m_is_moving_up)     velocity.y -= m_player_speed;
@@ -118,6 +118,8 @@ void Game::update(sf::Time dt) {
     if(m_is_moving_right)  velocity.x += m_player_speed;
 
     m_player->move(velocity * dt.asSeconds());
+
+    m_scene_graph.update(dt);
 }
 
 void Game::update_static_texts(sf::Time dt) {

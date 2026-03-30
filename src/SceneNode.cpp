@@ -1,6 +1,7 @@
 #include "SceneNode.hpp"
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/System/Time.hpp>
 #include <cassert>
 #include <utility>
 #include <algorithm>
@@ -36,3 +37,16 @@ void SceneNode::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
 
 void SceneNode::draw_current(sf::RenderTarget& target, sf::RenderStates states) const {}
+
+void SceneNode::update(sf::Time& dt) {
+    update_current(dt);
+    update_children(dt);
+}
+
+void SceneNode::update_current(sf::Time& dt) {}
+
+void SceneNode::update_children(sf::Time& dt) {
+    for(auto& child: m_children) {
+        child->update(dt);
+    }
+}

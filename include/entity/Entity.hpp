@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SceneNode.hpp"
+#include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 
 class Entity: public SceneNode {
@@ -9,6 +10,9 @@ class Entity: public SceneNode {
         void set_velocity(const float& vx, const float& vy);
 
         sf::Vector2f get_velocity() const;
+    
+    private:
+        virtual void update_current(sf::Time& dt);
     
     private:
         sf::Vector2f m_velocity;

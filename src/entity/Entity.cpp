@@ -11,6 +11,8 @@ void Entity::set_velocity(const float& vx, const float& vy) {
     m_velocity.y = vy;
 }
 
+sf::Vector2f Entity::get_velocity() const { return m_velocity; }
+
 void Entity::update_current(sf::Time& dt) {
-    move(m_velocity);
+    move(m_velocity * dt.asSeconds());
 }

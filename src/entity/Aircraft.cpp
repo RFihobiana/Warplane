@@ -17,7 +17,12 @@ Textures::ID get_texture_id(const Aircraft::Type type) {
     assert(false);
 }
 
-Aircraft::Aircraft(const Aircraft::Type type, const TextureHolder& textures): m_type(type) {
+Aircraft::Aircraft(const Aircraft::Type type, const TextureHolder& textures)
+: m_type(type)
+, m_is_moving_up(false)
+, m_is_moving_down(false)
+, m_is_moving_right(false)
+, m_is_moving_left(false) {
     const auto texture_id = get_texture_id(type);
     m_sprite.setTexture(textures.get(texture_id));
     center_origin(m_sprite);
@@ -29,15 +34,14 @@ void Aircraft::draw_current(sf::RenderTarget& target, sf::RenderStates states) c
 
 void Aircraft::update_current(sf::Time& dt) {
     const float speed = 200.f;
-    sf::Vector2f velocity(0.f,  -speed / 2.f);
+    sf::Vector2f velocity(0.f, -100.f);
 
     if(m_is_moving_up)     velocity.y -= speed;
-    if(m_is_moving_down)   velocity.y += speed;
+    if(m_is_moving_down)   velocity.y += speed * 2;
     if(m_is_moving_left)   velocity.x -= speed;
     if(m_is_moving_right)  velocity.x += speed;
 
-    set_velocity(velocity * dt.asSeconds());
-
+    set_velocity(velocity);
     Entity::update_current(dt);
 }
 

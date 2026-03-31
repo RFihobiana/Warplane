@@ -15,7 +15,7 @@ World::World(sf::RenderWindow& window, TextureHolder& textures)
 : m_window(window)
 , m_textures(textures)
 , m_spawn_player(sf::Vector2f(200.f, 200.f))
-, m_view(window.getView())
+, m_view(window.getDefaultView())
 , m_view_speed(0.f, -100.f) {
     m_view.setCenter(m_spawn_player);
     load_resources();

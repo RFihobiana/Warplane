@@ -15,23 +15,14 @@
 
 Game::Game()
 : m_window(sf::VideoMode(1240, 940), "War Plane")
-
-, m_background()
-, m_player(nullptr)
-, m_scene_graph()
+, m_world(m_window, m_textures)
+, m_player(m_world.get_player())
 
 // Static text
 , m_text() {
     load_resources();
 
-    
-    // Add player aircraft
-    Aircraft::Ptr aircraft(new Aircraft(Aircraft::Eagle, m_textures));
-    aircraft->setPosition(sf::Vector2f(m_window.getView().getSize()) / 2.f);
-    m_player = aircraft.get();
-    m_scene_graph.attach_child(std::move(aircraft));
-
-    // BACKGROUND
+    /* // BACKGROUND
     m_background.setTexture(m_textures.get(Textures::Landscape));
 
     // Scale backgroud image respectively to screen size
@@ -41,16 +32,13 @@ Game::Game()
         win_size.x / bg_bounds.width,
         win_size.y / bg_bounds.height
     ));
-
+ */
     // Setup fonts
     m_text.setFont(m_font_holder.get(Fonts::main));
 }
 
 void Game::load_resources() {
-    // Textures
-    m_textures.load(Textures::Eagle, "./assets/images/Eagle.png");
-    m_textures.load(Textures::Raptor, "./assets/images/Raptor.png");
-    m_textures.load(Textures::Landscape, "./assets/images/Desert.png");
+    
 
     // Fonts
     m_font_holder.load(Fonts::main, "./assets/fonts/Sansation.ttf");
@@ -95,14 +83,14 @@ void Game::process_events() {
 }
 
 void Game::handle_player_inputs(const sf::Keyboard::Key& key, const bool& is_pressed) {
-    if(key == sf::Keyboard::W)      m_player->move_up(is_pressed);
-    else if(key == sf::Keyboard::S) m_player->move_down(is_pressed);
-    else if(key == sf::Keyboard::D) m_player->move_right(is_pressed);
-    else if(key == sf::Keyboard::A) m_player->move_left(is_pressed);
+    if(key == sf::Keyboard::W)      m_player.move_up(is_pressed);
+    else if(key == sf::Keyboard::S) m_player.move_down(is_pressed);
+    else if(key == sf::Keyboard::D) m_player.move_right(is_pressed);
+    else if(key == sf::Keyboard::A) m_player.move_left(is_pressed);
 }
 
 void Game::update(sf::Time& dt) {
-    m_scene_graph.update(dt);
+    m_world.update(dt);
 }
 
 void Game::update_static_texts(sf::Time dt) {
@@ -125,9 +113,9 @@ void Game::update_static_texts(sf::Time dt) {
 
 void Game::draw() {
     m_window.clear();
+    m_window.setView(m_window.getDefaultView());
 
-    m_window.draw(m_background);
-    m_window.draw(m_scene_graph);
+    m_world.draw();
     m_window.draw(m_text);
 
     m_window.display();

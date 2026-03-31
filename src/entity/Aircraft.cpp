@@ -28,8 +28,8 @@ void Aircraft::draw_current(sf::RenderTarget& target, sf::RenderStates states) c
 }
 
 void Aircraft::update_current(sf::Time& dt) {
-    const float speed = 140.f;
-    sf::Vector2f velocity(0.f, - speed / 2.f);
+    const float speed = 100.f;
+    sf::Vector2f velocity(0.f,  -100.f);
 
     if(m_is_moving_up)     velocity.y -= speed;
     if(m_is_moving_down)   velocity.y += speed;

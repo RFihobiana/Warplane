@@ -11,6 +11,9 @@ sources = files(
 
     'src/entity/Entity.cpp',
     'src/entity/Aircraft.cpp',
+    'src/entity/SpriteNode.cpp',
+
+    'src/World.cpp',
 )
 
 executable(

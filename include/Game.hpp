@@ -1,5 +1,6 @@
 #pragma once
 #include "SceneNode.hpp"
+#include "World.hpp"
 #include "entity/Aircraft.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include <SFML/Graphics.hpp>
@@ -42,11 +43,8 @@ class Game {
         TextureHolder   m_textures;
         FontHolder      m_font_holder;
 
-        sf::Sprite m_background;
-        Aircraft* m_player;
-        SceneNode m_scene_graph;
-
-        float m_player_speed;
+        World m_world;
+        Aircraft& m_player;
 
         sf::Text m_text;
 };

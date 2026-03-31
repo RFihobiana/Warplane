@@ -4,15 +4,19 @@
 #include "entity/SpriteNode.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Time.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <cstddef>
 #include <utility>
 
 World::World(sf::RenderWindow& window, TextureHolder& textures)
 : m_window(window)
 , m_textures(textures)
+, m_spawn_player(sf::Vector2f(200.f, 200.f))
 , m_view(window.getView())
 , m_view_speed(0.f, -100.f) {
+    m_view.setCenter(m_spawn_player);
     load_resources();
     build();
 }
@@ -33,12 +37,23 @@ void World::build() {
     }
 
     // Create Background
+    sf::Texture& landscape_texture(m_textures.get(Textures::Landscape));
+    landscape_texture.setRepeated(true);
     SpriteNode::Ptr background(new SpriteNode(m_textures.get(Textures::Landscape)));
+    
+    // Scale the background as the View itself
+    auto view_size = m_view.getSize();
+    auto texture_size = landscape_texture.getSize();
+    background->setScale(sf::Vector2f(
+        view_size.x / texture_size.x,
+        view_size.y / texture_size.y
+    ));
+    background->setPosition(m_spawn_player);
     m_layers[Background]->attach_child(std::move(background));
 
     // Create Aircraft
     Aircraft::Ptr aircraft(new Aircraft(Aircraft::Eagle, m_textures));
-    aircraft->setPosition(sf::Vector2f(m_window.getView().getSize()) / 2.f);
+    aircraft->setPosition(m_spawn_player);
     m_player = aircraft.get();
     m_layers[Air]->attach_child(std::move(aircraft));
     

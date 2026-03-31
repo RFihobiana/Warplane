@@ -35,6 +35,7 @@ class World {
     private:
         sf::RenderWindow&   m_window;
         TextureHolder&      m_textures;
+        sf::Vector2f        m_spawn_player;
         
         sf::View        m_view;
         sf::Vector2f    m_view_speed;
@@ -42,4 +43,5 @@ class World {
         SceneNode                           m_graph;
         std::array<SceneNode*, LayerCount>  m_layers;
         Aircraft*                           m_player;
+
 };

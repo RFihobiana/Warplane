@@ -17,6 +17,7 @@ class World {
         void draw() const;
 
         Aircraft& get_player() const;
+        const sf::View& get_view() const;
     
     private:
         

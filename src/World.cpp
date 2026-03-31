@@ -5,6 +5,7 @@
 #include "resources/ResourceIdentifier.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Graphics/View.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <cstddef>
@@ -72,3 +73,5 @@ void World::draw() const {
 Aircraft& World::get_player() const {
     return *m_player;
 }
+
+const sf::View& World::get_view() const { return m_view; }

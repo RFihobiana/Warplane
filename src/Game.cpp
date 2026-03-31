@@ -3,6 +3,7 @@
 #include "resources/ResourceIdentifier.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/View.hpp>
 #include <SFML/System/Clock.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -22,24 +23,11 @@ Game::Game()
 , m_text() {
     load_resources();
 
-    /* // BACKGROUND
-    m_background.setTexture(m_textures.get(Textures::Landscape));
-
-    // Scale backgroud image respectively to screen size
-    auto bg_bounds = m_background.getLocalBounds();
-    auto win_size = m_window.getSize();
-    m_background.setScale(sf::Vector2f(
-        win_size.x / bg_bounds.width,
-        win_size.y / bg_bounds.height
-    ));
- */
     // Setup fonts
     m_text.setFont(m_font_holder.get(Fonts::main));
 }
 
 void Game::load_resources() {
-    
-
     // Fonts
     m_font_holder.load(Fonts::main, "./assets/fonts/Sansation.ttf");
 }
@@ -109,14 +97,17 @@ void Game::update_static_texts(sf::Time dt) {
     }
 
     m_text.setString("FPS: " + std::to_string(last_frame_count));
+    const sf::View& world_view(m_world.get_view());
+    sf::Vector2f view_position =  sf::Vector2f(world_view.getCenter() - (world_view.getSize() / 2.f));
+    m_text.setPosition(view_position);
 }
 
 void Game::draw() {
     m_window.clear();
-    m_window.setView(m_window.getDefaultView());
 
     m_world.draw();
     m_window.draw(m_text);
 
+    m_window.setView(m_window.getDefaultView());
     m_window.display();
 }

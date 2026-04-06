@@ -6,7 +6,9 @@
 #include "command/CommandQueue.hpp"
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
+#include <iostream>
 
 struct AircraftMover {
     AircraftMover(const float vx, const float vy): velocity(vx, vy) {}
@@ -22,6 +24,23 @@ Player::Player() {
 }
 
 void Player::handle_event(const sf::Event& event, CommandQueue& commands) {
+    if(event.type == sf::Event::KeyReleased) {
+        if(event.key.code == sf::Keyboard::P) {
+            Command show_position {
+                .action = derivated<Aircraft>([](Aircraft& target, sf::Time& dt) {
+                    const auto pos = target.getPosition();
+                    std::cout
+                        << "Player position: ("
+                        << pos.x << ", " << pos.y
+                        << ")"
+                        << std::endl;
+
+                }),
+                .category = Category::PlayerAircraft
+            };
+            commands.push_back(show_position);
+        }
+    }
 }
 void Player::handle_realtime_event(CommandQueue& commands) {
     const float speed = 2.5f;

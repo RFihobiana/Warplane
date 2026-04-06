@@ -2,6 +2,7 @@
 
 #include "SceneNode.hpp"
 #include "entity/Aircraft.hpp"
+#include "entity/SpriteNode.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/View.hpp>

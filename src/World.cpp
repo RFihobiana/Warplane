@@ -3,6 +3,7 @@
 #include "entity/Aircraft.hpp"
 #include "entity/SpriteNode.hpp"
 #include "resources/ResourceIdentifier.hpp"
+#include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Graphics/View.hpp>
@@ -39,8 +40,10 @@ void World::build() {
 
     // Create Background
     sf::Texture& landscape_texture(m_textures.get(Textures::Landscape));
+    sf::IntRect bounds(0, 0, landscape_texture.getSize().x, 2000 * 1000);
     landscape_texture.setRepeated(true);
-    SpriteNode::Ptr background(new SpriteNode(m_textures.get(Textures::Landscape)));
+    
+    SpriteNode::Ptr background(new SpriteNode(m_textures.get(Textures::Landscape), bounds));
     
     // Scale the background as the View itself
     auto view_size = m_view.getSize();

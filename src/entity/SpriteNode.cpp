@@ -1,11 +1,17 @@
 #include "entity/SpriteNode.hpp"
 #include "utilities.hpp"
+#include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Texture.hpp>
 
 SpriteNode::SpriteNode(const sf::Texture& texture)
 : m_sprite(texture) {
+    center_origin(m_sprite);
+}
+
+SpriteNode::SpriteNode(const sf::Texture& texture, const sf::IntRect& rect)
+: m_sprite(texture, rect) {
     center_origin(m_sprite);
 }
 

@@ -73,6 +73,9 @@ void Game::process_events() {
         else if(event.type == sf::Event::KeyReleased) {
             handle_player_inputs(event.key.code, false);
         }
+
+        else if(event.type == sf::Event::GainedFocus) m_is_paused = false;
+        else if(event.type == sf::Event::LostFocus) m_is_paused = true;
     }
 }
 

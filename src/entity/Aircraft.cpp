@@ -1,6 +1,5 @@
 #include "entity/Aircraft.hpp"
 #include "command/Category.hpp"
-#include "entity/Entity.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "utilities.hpp"
 #include <SFML/Graphics/RenderStates.hpp>
@@ -19,11 +18,7 @@ Textures::ID get_texture_id(const Aircraft::Type type) {
 }
 
 Aircraft::Aircraft(const Aircraft::Type type, const TextureHolder& textures)
-: m_type(type)
-, m_is_moving_up(false)
-, m_is_moving_down(false)
-, m_is_moving_right(false)
-, m_is_moving_left(false) {
+: m_type(type) {
     const auto texture_id = get_texture_id(type);
     m_sprite.setTexture(textures.get(texture_id));
     center_origin(m_sprite);
@@ -31,37 +26,6 @@ Aircraft::Aircraft(const Aircraft::Type type, const TextureHolder& textures)
 
 void Aircraft::draw_current(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(m_sprite, states);
-}
-
-void Aircraft::update_current(sf::Time& dt) {
-    if (m_type != Eagle ) return;
-
-    const float speed = 200.f;
-    sf::Vector2f velocity(0.f, -100.f);
-
-    if(m_is_moving_up)     velocity.y -= speed;
-    if(m_is_moving_down)   velocity.y += speed * 2;
-    if(m_is_moving_left)   velocity.x -= speed;
-    if(m_is_moving_right)  velocity.x += speed;
-
-    set_velocity(velocity);
-    Entity::update_current(dt);
-}
-
-void Aircraft::move_down(const bool is_pressed) {
-    m_is_moving_down = is_pressed;
-}
-
-void Aircraft::move_right(const bool is_pressed) {
-    m_is_moving_right = is_pressed;
-}
-
-void Aircraft::move_left(const bool is_pressed) {
-    m_is_moving_left = is_pressed;
-}
-
-void Aircraft::move_up(const bool is_pressed) {
-    m_is_moving_up = is_pressed;
 }
 
 unsigned int Aircraft::get_category() const {

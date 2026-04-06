@@ -70,6 +70,7 @@ void World::build() {
     // Create Aircraft
     std::unique_ptr<Aircraft> aircraft(new Aircraft(Aircraft::Eagle, m_textures));
     aircraft->setPosition(m_spawn_player);
+    aircraft->set_velocity(m_scroll_speed);
     m_player = aircraft.get();
     m_layers[Air]->attach_child(std::move(aircraft));
     
@@ -85,12 +86,13 @@ void World::build() {
 
 void World::update(sf::Time& dt) {
     m_view.move(m_scroll_speed * dt.asSeconds());
-    m_graph.update(dt);
 
     // Propagate commands
     while(!m_command_queue.is_empty()) {
         m_graph.on_command(m_command_queue.pop(), dt);
     }
+    
+    m_graph.update(dt);
 }
 
 void World::draw() const {

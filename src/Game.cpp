@@ -1,4 +1,5 @@
 #include "Game.hpp"
+#include "command/CommandQueue.hpp"
 #include "entity/Aircraft.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include <SFML/Graphics/Color.hpp>
@@ -17,10 +18,7 @@
 Game::Game()
 : m_window(sf::VideoMode(1240, 940), "War Plane")
 , m_world(m_window, m_textures)
-, m_player(m_world.get_player())
-
 , m_text()
-
 , m_is_paused(false) {
     load_resources();
 
@@ -55,8 +53,13 @@ void Game::run() {
 
 void Game::process_events() {
     sf::Event event;
+
+    CommandQueue& commands = m_world.get_command_queue();
     
     while(m_window.pollEvent(event)) {
+
+        m_player.handle_event(event, commands);
+
         if(
             event.type == sf::Event::Closed
             || (
@@ -64,26 +67,11 @@ void Game::process_events() {
                 && event.key.code == sf::Keyboard::Escape
             )
         ) m_window.close();
-
-        else if(event.type == sf::Event::KeyPressed) {
-            handle_player_inputs(event.key.code, true);
-            if(event.key.code == sf::Keyboard::Space) m_is_paused = !m_is_paused; // Handle pause
-        }
-
-        else if(event.type == sf::Event::KeyReleased) {
-            handle_player_inputs(event.key.code, false);
-        }
-
         else if(event.type == sf::Event::GainedFocus) m_is_paused = false;
         else if(event.type == sf::Event::LostFocus) m_is_paused = true;
     }
-}
 
-void Game::handle_player_inputs(const sf::Keyboard::Key& key, const bool& is_pressed) {
-    if(key == sf::Keyboard::W)      m_player.move_up(is_pressed);
-    else if(key == sf::Keyboard::S) m_player.move_down(is_pressed);
-    else if(key == sf::Keyboard::D) m_player.move_right(is_pressed);
-    else if(key == sf::Keyboard::A) m_player.move_left(is_pressed);
+    m_player.handle_realtime_event(commands);
 }
 
 void Game::update(sf::Time& dt) {

@@ -15,8 +15,8 @@ sources = files(
 
     'src/World.cpp',
 
-    'src/command/Command.cpp',
     'src/command/CommandQueue.cpp',
+    'src/entity/Player.cpp',
 )
 
 executable(

@@ -3,7 +3,6 @@
 #include "SceneNode.hpp"
 #include "command/CommandQueue.hpp"
 #include "entity/Aircraft.hpp"
-#include "entity/SpriteNode.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>

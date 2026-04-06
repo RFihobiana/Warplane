@@ -1,7 +1,8 @@
 #pragma once
-#include "SceneNode.hpp"
+
 #include "World.hpp"
 #include "entity/Aircraft.hpp"
+#include "entity/Player.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
@@ -24,10 +25,6 @@ class Game {
         void process_events();
         void update(sf::Time& dt);
         void draw();
-
-        // Player movements
-        void handle_player_inputs(const sf::Keyboard::Key& key, const bool& is_pressed);
-
         void update_static_texts(sf::Time dt);
     
     private:
@@ -44,7 +41,7 @@ class Game {
         FontHolder      m_font_holder;
 
         World m_world;
-        Aircraft& m_player;
+        Player m_player;
 
         sf::Text m_text;
 

@@ -1,4 +1,6 @@
 #include "SceneNode.hpp"
+#include "command/Category.hpp"
+#include "command/Command.hpp"
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Transform.hpp>
@@ -66,3 +68,14 @@ sf::Vector2f SceneNode::get_world_position() const {
     return get_world_transform() * sf::Vector2f();
 }
 
+unsigned int SceneNode::get_category() const {
+    return Category::Scene;
+}
+
+void SceneNode::on_command(const Command& command, sf::Time& dt) {
+    if(get_category() & command.category) command.action(*this, dt);
+    
+    for(auto& child: m_children) {
+        child->on_command(command, dt);
+    }
+}

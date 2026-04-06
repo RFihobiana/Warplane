@@ -20,6 +20,8 @@ class Aircraft: public Entity {
         void move_right(const bool is_pressed);
         void move_left(const bool is_pressed);
         void move_up(const bool is_pressed);
+
+        virtual unsigned int get_category() const;
     
     private:
         virtual void draw_current(sf::RenderTarget& target, sf::RenderStates states) const;

@@ -11,6 +11,9 @@
 #include <memory>
 #include <vector>
 #include <SFML/Graphics.hpp>
+
+struct Command;
+
 class SceneNode: public sf::Drawable, public sf::Transformable, private sf::NonCopyable {
     public:
         typedef std::unique_ptr<SceneNode> Ptr;
@@ -25,6 +28,10 @@ class SceneNode: public sf::Drawable, public sf::Transformable, private sf::NonC
 
         sf::Transform   get_world_transform()   const;
         sf::Vector2f    get_world_position()    const;
+
+        virtual unsigned int get_category() const;
+
+        void on_command(const Command& command, sf::Time& dt);
 
     private:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates) const ;

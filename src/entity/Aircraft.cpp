@@ -1,4 +1,5 @@
 #include "entity/Aircraft.hpp"
+#include "command/Category.hpp"
 #include "entity/Entity.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "utilities.hpp"
@@ -61,4 +62,11 @@ void Aircraft::move_left(const bool is_pressed) {
 
 void Aircraft::move_up(const bool is_pressed) {
     m_is_moving_up = is_pressed;
+}
+
+unsigned int Aircraft::get_category() const {
+    switch (m_type) {
+        case Eagle: return Category::PlayerAircraft;
+        default:    return Category::EnemyAircraft;
+    }
 }

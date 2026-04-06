@@ -14,6 +14,8 @@ sources = files(
     'src/entity/SpriteNode.cpp',
 
     'src/World.cpp',
+
+    'src/command/Command.cpp',
 )
 
 executable(

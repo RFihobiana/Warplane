@@ -33,6 +33,8 @@ void Aircraft::draw_current(sf::RenderTarget& target, sf::RenderStates states) c
 }
 
 void Aircraft::update_current(sf::Time& dt) {
+    if (m_type != Eagle ) return;
+
     const float speed = 200.f;
     sf::Vector2f velocity(0.f, -100.f);
 

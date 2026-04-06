@@ -4,13 +4,15 @@
 #include "entity/Aircraft.hpp"
 #include "entity/SpriteNode.hpp"
 #include "resources/ResourceIdentifier.hpp"
+#include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/View.hpp>
+#include <SFML/System/NonCopyable.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <array>
 
-class World {
+class World: public sf::NonCopyable {
     public:
         World(sf::RenderWindow& window, TextureHolder& textures);
 
@@ -37,13 +39,15 @@ class World {
     private:
         sf::RenderWindow&   m_window;
         TextureHolder&      m_textures;
-        sf::Vector2f        m_spawn_player;
         
         sf::View        m_view;
-        sf::Vector2f    m_view_speed;
+        sf::FloatRect   m_world_bound;
+        sf::Vector2f    m_scroll_speed;
         
         SceneNode                           m_graph;
         std::array<SceneNode*, LayerCount>  m_layers;
+
         Aircraft*                           m_player;
+        sf::Vector2f        m_spawn_player;
 
 };

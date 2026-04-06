@@ -6,11 +6,8 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Time.hpp>
-#include <memory>
 class Aircraft: public Entity {
     public:
-        typedef std::unique_ptr<Aircraft> Ptr;
-        
         enum Type {
             Eagle,
             Raptor,

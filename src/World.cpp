@@ -10,14 +10,25 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <cstddef>
+#include <memory>
 #include <utility>
 
 World::World(sf::RenderWindow& window, TextureHolder& textures)
 : m_window(window)
 , m_textures(textures)
-, m_spawn_player(sf::Vector2f(200.f, 200.f))
+
 , m_view(window.getDefaultView())
-, m_view_speed(0.f, -100.f) {
+, m_world_bound(
+    0.f,
+    0.f,
+    m_view.getSize().x,
+    50000.f
+)
+, m_scroll_speed(0.f, -100.f)
+, m_spawn_player(
+    m_world_bound.left + m_world_bound.width / 2,
+    m_world_bound.top + m_world_bound.height - m_view.getSize().y / 2
+) {
     m_view.setCenter(m_spawn_player);
     load_resources();
     build();
@@ -40,7 +51,7 @@ void World::build() {
 
     // Create Background
     sf::Texture& landscape_texture(m_textures.get(Textures::Landscape));
-    sf::IntRect bounds(0, 0, landscape_texture.getSize().x, 2000 * 1000);
+    sf::IntRect bounds(0, 0, landscape_texture.getSize().x, m_world_bound.height);
     landscape_texture.setRepeated(true);
     
     SpriteNode::Ptr background(new SpriteNode(m_textures.get(Textures::Landscape), bounds));
@@ -56,15 +67,23 @@ void World::build() {
     m_layers[Background]->attach_child(std::move(background));
 
     // Create Aircraft
-    Aircraft::Ptr aircraft(new Aircraft(Aircraft::Eagle, m_textures));
+    std::unique_ptr<Aircraft> aircraft(new Aircraft(Aircraft::Eagle, m_textures));
     aircraft->setPosition(m_spawn_player);
     m_player = aircraft.get();
     m_layers[Air]->attach_child(std::move(aircraft));
     
+    // Player escort
+    std::unique_ptr<Aircraft> left_escort(new Aircraft(Aircraft::Raptor, m_textures));
+    left_escort->setPosition(-60.f, 80.f);
+    m_player->attach_child(std::move(left_escort));
+
+    std::unique_ptr<Aircraft> right_escort(new Aircraft(Aircraft::Raptor, m_textures));
+    right_escort->setPosition(60.f, 80.f);
+    m_player->attach_child(std::move(right_escort));
 }
 
 void World::update(sf::Time& dt) {
-    m_view.move(m_view_speed * dt.asSeconds());
+    m_view.move(m_scroll_speed * dt.asSeconds());
     m_graph.update(dt);
 }
 

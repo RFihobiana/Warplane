@@ -47,4 +47,6 @@ class Game {
         Aircraft& m_player;
 
         sf::Text m_text;
+
+        bool m_is_paused;
 };

@@ -19,8 +19,9 @@ Game::Game()
 , m_world(m_window, m_textures)
 , m_player(m_world.get_player())
 
-// Static text
-, m_text() {
+, m_text()
+
+, m_is_paused(false) {
     load_resources();
 
     // Setup fonts
@@ -43,7 +44,7 @@ void Game::run() {
             time_since_last_update -= fps
         ) {
             process_events();
-            update(fps);
+            if(!m_is_paused) update(fps);
             update_static_texts(fps);
         }
         
@@ -64,9 +65,14 @@ void Game::process_events() {
             )
         ) m_window.close();
 
-        else if(event.type == sf::Event::KeyPressed) handle_player_inputs(event.key.code, true);
+        else if(event.type == sf::Event::KeyPressed) {
+            handle_player_inputs(event.key.code, true);
+            if(event.key.code == sf::Keyboard::Space) m_is_paused = !m_is_paused; // Handle pause
+        }
 
-        else if(event.type == sf::Event::KeyReleased) handle_player_inputs(event.key.code, false);
+        else if(event.type == sf::Event::KeyReleased) {
+            handle_player_inputs(event.key.code, false);
+        }
     }
 }
 

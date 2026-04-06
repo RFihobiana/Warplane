@@ -1,5 +1,6 @@
 #include "World.hpp"
 #include "SceneNode.hpp"
+#include "command/CommandQueue.hpp"
 #include "entity/Aircraft.hpp"
 #include "entity/SpriteNode.hpp"
 #include "resources/ResourceIdentifier.hpp"
@@ -85,6 +86,11 @@ void World::build() {
 void World::update(sf::Time& dt) {
     m_view.move(m_scroll_speed * dt.asSeconds());
     m_graph.update(dt);
+
+    // Propagate commands
+    while(!m_command_queue.is_empty()) {
+        m_graph.on_command(m_command_queue.pop(), dt);
+    }
 }
 
 void World::draw() const {
@@ -97,3 +103,7 @@ Aircraft& World::get_player() const {
 }
 
 const sf::View& World::get_view() const { return m_view; }
+
+CommandQueue& World::get_command_queue() {
+    return m_command_queue;
+}

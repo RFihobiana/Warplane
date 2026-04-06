@@ -16,6 +16,7 @@ sources = files(
     'src/World.cpp',
 
     'src/command/Command.cpp',
+    'src/command/CommandQueue.cpp',
 )
 
 executable(

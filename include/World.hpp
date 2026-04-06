@@ -1,6 +1,7 @@
 #pragma once
 
 #include "SceneNode.hpp"
+#include "command/CommandQueue.hpp"
 #include "entity/Aircraft.hpp"
 #include "entity/SpriteNode.hpp"
 #include "resources/ResourceIdentifier.hpp"
@@ -21,6 +22,8 @@ class World: public sf::NonCopyable {
 
         Aircraft& get_player() const;
         const sf::View& get_view() const;
+
+        CommandQueue& get_command_queue();
     
     private:
         
@@ -49,5 +52,7 @@ class World: public sf::NonCopyable {
 
         Aircraft*                           m_player;
         sf::Vector2f        m_spawn_player;
+
+        CommandQueue m_command_queue;
 
 };

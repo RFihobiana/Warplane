@@ -1,9 +1,9 @@
 #pragma once
 
 #include "World.hpp"
-#include "entity/Aircraft.hpp"
 #include "entity/Player.hpp"
 #include "resources/ResourceIdentifier.hpp"
+#include "states/State.hpp"
 #include "states/StateStack.hpp"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/CircleShape.hpp>
@@ -13,41 +13,20 @@
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/System/Time.hpp>
+#include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 
-class Application {
+class GameState: public State {
     public:
-        Application();
-        void run();
+        GameState(StateStack& stack, Context& ctx);
 
     private:
         void load_resources();
-        void initialize_stacks();
 
-        void process_events();
-        void update(sf::Time& dt);
-        void draw();
-        void update_static_texts(sf::Time dt);
+        virtual bool handle_events(const sf::Event& event);
+        virtual bool update(sf::Time& dt);
+        virtual void draw() const;
     
     private:
-        enum Layers {
-            Background,
-            Air,
-            LayourCount,
-        };
-    
-    private:
-        sf::RenderWindow m_window;
-        
-        TextureHolder   m_textures;
-        FontHolder      m_font_holder;
-
-        World m_world;
-        Player m_player;
-
-        sf::Text m_text;
-
-        bool m_is_paused;
-
-        StateStack m_stack;
+        World           m_world;
 };

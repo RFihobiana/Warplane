@@ -39,3 +39,8 @@ const Resource& ResourceHolder<ResourceID, Resource>::get(const ResourceID id) c
     assert(resource != m_data.end());
     return *resource->second;
 }
+
+template<typename ResourceID, typename Resource>
+bool ResourceHolder<ResourceID, Resource>::has(const ResourceID& resource_id) const {
+    return m_data.find(resource_id) != m_data.end();
+}

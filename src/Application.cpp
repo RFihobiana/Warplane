@@ -2,6 +2,7 @@
 #include "command/CommandQueue.hpp"
 #include "entity/Aircraft.hpp"
 #include "resources/ResourceIdentifier.hpp"
+#include "states/GameState.hpp"
 #include "states/Introduction.hpp"
 #include "states/State.hpp"
 #include "states/StateIdentification.hpp"
@@ -20,9 +21,10 @@
 
 Application::Application()
 : m_window(sf::VideoMode(1240, 1024), "War Plane")
+, m_player()
 , m_text()
 , m_is_paused(false)
-, m_stack(State::Context(m_window, m_textures, m_font_holder)) {
+, m_stack(State::Context(m_window, m_textures, m_font_holder, m_player)) {
     load_resources();
     initialize_stacks();
 
@@ -39,6 +41,7 @@ void Application::load_resources() {
 
 void Application::initialize_stacks() {
     m_stack.register_state<Introduction>(States::Introduction);
+    m_stack.register_state<GameState>(States::Game);
 }
 
 void Application::run() {
@@ -109,10 +112,11 @@ void Application::update_static_texts(sf::Time dt) {
 void Application::draw() {
     m_window.clear();
 
-    m_window.draw(m_text);
 
     m_stack.draw();
-
+    
     m_window.setView(m_window.getDefaultView());
+    m_window.draw(m_text);
+
     m_window.display();
 }

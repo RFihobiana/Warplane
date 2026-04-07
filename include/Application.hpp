@@ -1,5 +1,6 @@
 #pragma once
 
+#include "entity/Player.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "states/StateStack.hpp"
 #include <SFML/Graphics.hpp>
@@ -32,6 +33,7 @@ class Application {
         
         TextureHolder   m_textures;
         FontHolder      m_font_holder;
+        Player          m_player;
 
         sf::Text m_text;
 

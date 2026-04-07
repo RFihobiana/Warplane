@@ -1,5 +1,6 @@
 #pragma once
 
+#include "entity/Player.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "states/StateIdentification.hpp"
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -16,15 +17,18 @@ class State {
             sf::RenderWindow*   window;
             TextureHolder*      textures;
             FontHolder*         fonts;
+            Player*             player;
 
             Context(
                 sf::RenderWindow&   window,
                 TextureHolder&      textures,
-                FontHolder&         fonts
+                FontHolder&         fonts,
+                Player&             player
             )
             : window(&window)
             , textures(&textures)
-            , fonts(&fonts) {}
+            , fonts(&fonts)
+            , player(&player) {}
         };
         
     public:

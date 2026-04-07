@@ -15,8 +15,8 @@
 struct AircraftMover {
     AircraftMover(const float vx, const float vy): velocity(vx, vy) {}
 
-    void operator() (Aircraft& aircraft, sf::Time& dt) const {
-        aircraft.accelerate(velocity * dt.asSeconds());
+    void operator() (Aircraft& aircraft, sf::Time&) const {
+        aircraft.accelerate(velocity);
     }
 
     const sf::Vector2f velocity;

@@ -5,6 +5,7 @@ namespace States {
         None,
         Introduction,
         MainMenu,
+        Game,
         Loading,
         Pause,
     };

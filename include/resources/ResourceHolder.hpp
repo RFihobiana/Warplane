@@ -15,6 +15,8 @@ class ResourceHolder {
 
         Resource& get(const ResourceID id);
         const Resource& get(const ResourceID id) const;
+
+        bool has(const ResourceID& resource_id) const;
     
     private:
         void insert(const ResourceID& id, std::unique_ptr<Resource> resource);

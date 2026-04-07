@@ -10,6 +10,7 @@
 #include <SFML/Graphics/View.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <algorithm>
 #include <cmath>
 #include <cstddef>
 #include <memory>
@@ -99,6 +100,21 @@ void World::update(sf::Time& dt) {
     m_player->accelerate(0.f, m_scroll_speed.y);
     
     m_graph.update(dt);
+
+    // Don't allow player aircraft leave the view
+    sf::FloatRect view_bound {
+        m_view.getCenter() - m_view.getSize() / 2.f,
+        m_view.getSize()
+    };
+    float border_distance = 110.f;
+    sf::Vector2f position = m_player->getPosition();
+    
+    position.x = std::min(position.x, view_bound.left + view_bound.width - border_distance);
+    position.x = std::max(position.x, view_bound.left + border_distance);
+    position.y = std::max(position.y, view_bound.top + border_distance / 2.5f);
+    position.y = std::min(position.y, view_bound.top + view_bound.height - border_distance);
+
+    m_player->setPosition(position);
 }
 
 void World::draw() const {

@@ -1,11 +1,11 @@
-#include "Game.hpp"
+#include "Application.hpp"
 #include <cstdlib>
 #include <iostream>
 #include <stdexcept>
 
 int main() {
     try {
-        Game game;
+        Application game;
         game.run();
     } catch(std::runtime_error& e) {
         std::cerr 

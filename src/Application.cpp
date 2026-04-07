@@ -1,0 +1,118 @@
+#include "Application.hpp"
+#include "command/CommandQueue.hpp"
+#include "entity/Aircraft.hpp"
+#include "resources/ResourceIdentifier.hpp"
+#include "states/Introduction.hpp"
+#include "states/State.hpp"
+#include "states/StateIdentification.hpp"
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Rect.hpp>
+#include <SFML/Graphics/View.hpp>
+#include <SFML/System/Clock.hpp>
+#include <SFML/System/Time.hpp>
+#include <SFML/System/Vector2.hpp>
+#include <SFML/Window.hpp>
+#include <SFML/Window/Event.hpp>
+#include <SFML/Window/Keyboard.hpp>
+#include <SFML/Window/VideoMode.hpp>
+#include <string>
+#include <utility>
+
+Application::Application()
+: m_window(sf::VideoMode(1240, 1024), "War Plane")
+, m_text()
+, m_is_paused(false)
+, m_stack(State::Context(m_window, m_textures, m_font_holder)) {
+    load_resources();
+    initialize_stacks();
+
+    // Setup fonts
+    m_text.setFont(m_font_holder.get(Fonts::main));
+
+    m_stack.pushState(States::Introduction);
+}
+
+void Application::load_resources() {
+    // Fonts
+    m_font_holder.load(Fonts::main, "./assets/fonts/Sansation.ttf");
+}
+
+void Application::initialize_stacks() {
+    m_stack.register_state<Introduction>(States::Introduction);
+}
+
+void Application::run() {
+    sf::Clock clock;
+    sf::Time fps(sf::seconds(1 / 60.f)), time_since_last_update(sf::Time::Zero);
+    
+    while(m_window.isOpen()) {
+        for(
+            time_since_last_update += clock.restart();
+            time_since_last_update > fps;
+            time_since_last_update -= fps
+        ) {
+            process_events();
+            if(!m_is_paused) update(fps);
+            update_static_texts(fps);
+
+            if(m_stack.is_empty()) m_window.close();
+        }
+        
+        process_events();
+        draw();
+    }
+}
+
+void Application::process_events() {
+    sf::Event event;
+    
+    while(m_window.pollEvent(event)) {
+
+        if(
+            event.type == sf::Event::Closed
+            || (
+                event.type == sf::Event::KeyReleased
+                && event.key.code == sf::Keyboard::Escape
+            )
+        ) m_window.close();
+        else if(event.type == sf::Event::GainedFocus) m_is_paused = false;
+        else if(event.type == sf::Event::LostFocus) m_is_paused = true;
+        
+        m_stack.handle_events(event);
+    }
+}
+
+void Application::update(sf::Time& dt) {
+    m_stack.update(dt);
+}
+
+void Application::update_static_texts(sf::Time dt) {
+    static sf::Time elapsed_time(sf::Time::Zero);
+    static long long frame_count = 0, last_frame_count = 0;
+
+    elapsed_time += dt;
+    
+    if(elapsed_time >= sf::seconds(1.f)) {
+        // Update fps resulted value for the screen and reset counters 
+        last_frame_count = frame_count;
+        elapsed_time = sf::Time::Zero;
+        frame_count = 0;
+    } else {
+        frame_count++;
+    }
+
+    m_text.setString("FPS: " + std::to_string(last_frame_count));
+    sf::Vector2f view_position(0.f, 0.f);
+    m_text.setPosition(view_position);
+}
+
+void Application::draw() {
+    m_window.clear();
+
+    m_window.draw(m_text);
+
+    m_stack.draw();
+
+    m_window.setView(m_window.getDefaultView());
+    m_window.display();
+}

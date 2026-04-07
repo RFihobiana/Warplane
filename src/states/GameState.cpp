@@ -1,7 +1,10 @@
-#include "Game.hpp"
+#include "Application.hpp"
 #include "command/CommandQueue.hpp"
 #include "entity/Aircraft.hpp"
 #include "resources/ResourceIdentifier.hpp"
+#include "states/Introduction.hpp"
+#include "states/State.hpp"
+#include "states/StateIdentification.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/View.hpp>
@@ -15,23 +18,31 @@
 #include <string>
 #include <utility>
 
-Game::Game()
+Application::Application()
 : m_window(sf::VideoMode(1240, 940), "War Plane")
 , m_world(m_window, m_textures)
 , m_text()
-, m_is_paused(false) {
+, m_is_paused(false)
+, m_stack(State::Context(m_window, m_textures, m_font_holder)) {
     load_resources();
+    initialize_stacks();
 
     // Setup fonts
     m_text.setFont(m_font_holder.get(Fonts::main));
+
+    m_stack.pushState(States::Introduction);
 }
 
-void Game::load_resources() {
+void Application::load_resources() {
     // Fonts
     m_font_holder.load(Fonts::main, "./assets/fonts/Sansation.ttf");
 }
 
-void Game::run() {
+void Application::initialize_stacks() {
+    m_stack.register_state<Introduction>(States::Introduction);
+}
+
+void Application::run() {
     sf::Clock clock;
     sf::Time fps(sf::seconds(1 / 60.f)), time_since_last_update(sf::Time::Zero);
     
@@ -44,6 +55,8 @@ void Game::run() {
             process_events();
             if(!m_is_paused) update(fps);
             update_static_texts(fps);
+
+            if(m_stack.is_empty()) m_window.close();
         }
         
         process_events();
@@ -51,7 +64,7 @@ void Game::run() {
     }
 }
 
-void Game::process_events() {
+void Application::process_events() {
     sf::Event event;
 
     CommandQueue& commands = m_world.get_command_queue();
@@ -74,11 +87,12 @@ void Game::process_events() {
     m_player.handle_realtime_event(commands);
 }
 
-void Game::update(sf::Time& dt) {
+void Application::update(sf::Time& dt) {
     m_world.update(dt);
+    m_stack.update(dt);
 }
 
-void Game::update_static_texts(sf::Time dt) {
+void Application::update_static_texts(sf::Time dt) {
     static sf::Time elapsed_time(sf::Time::Zero);
     static long long frame_count = 0, last_frame_count = 0;
 
@@ -99,7 +113,7 @@ void Game::update_static_texts(sf::Time dt) {
     m_text.setPosition(view_position);
 }
 
-void Game::draw() {
+void Application::draw() {
     m_window.clear();
 
     m_world.draw();

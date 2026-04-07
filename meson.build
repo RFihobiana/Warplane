@@ -5,7 +5,7 @@ project(
 
 sources = files(
     'src/main.cpp',
-    'src/Game.cpp',
+    'src/Application.cpp',
     'src/utilities.cpp',
     'src/SceneNode.cpp',
 
@@ -17,6 +17,10 @@ sources = files(
 
     'src/command/CommandQueue.cpp',
     'src/entity/Player.cpp',
+
+    'src/states/StateStack.cpp',
+    'src/states/State.cpp',
+    'src/states/Introduction.cpp',
 )
 
 executable(

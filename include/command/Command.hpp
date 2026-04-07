@@ -1,13 +1,14 @@
 #pragma once
 
 #include "SceneNode.hpp"
+#include "command/Category.hpp"
 #include <SFML/System/Time.hpp>
 #include <cassert>
 #include <functional>
 
 struct Command {
     std::function<void(SceneNode& target, sf::Time& dt)> action;
-    unsigned int category;
+    unsigned int category = Category::None;
 };
 
 template<typename GameObject, typename Function>

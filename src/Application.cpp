@@ -37,6 +37,7 @@ Application::Application()
 void Application::load_resources() {
     // Fonts
     m_font_holder.load(Fonts::main, "./assets/fonts/Sansation.ttf");
+    m_font_holder.load(Fonts::Hanalei, "./assets/fonts/Hanalei.ttf");
 }
 
 void Application::initialize_stacks() {

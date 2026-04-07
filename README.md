@@ -7,11 +7,12 @@ A 2D warplane game developed with SFML (Simple and Fast Multimedia Library) in C
 | :---: | :---: |
 | ![Intro Screen][intro_screen_asset] | ![Game Screen][game_screen_asset] |
 
-
 ## Features
 
 - Player-controlled warplane
 - Frame Rate Per Seconds tracking
+- Seperate command so we can give order to anyone at anytime
+- Divide game into states
 
 ## Requirements
 
@@ -34,7 +35,8 @@ meson compile -C build
 
 ## Controls
 
-- **Arrow Keys**: Move
+- **WASD Keys**: Move
+- **P**: Show player position
 - **ESC**: Quit
 
 ## Project Structure

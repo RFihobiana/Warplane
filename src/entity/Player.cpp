@@ -43,7 +43,7 @@ void Player::handle_event(const sf::Event& event, CommandQueue& commands) {
     }
 }
 void Player::handle_realtime_event(CommandQueue& commands) {
-    const float speed = 2.5f;
+    const float speed = 200.f;
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
         Command move_up {

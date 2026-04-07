@@ -10,6 +10,7 @@
 #include <SFML/Graphics/View.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
+#include <cmath>
 #include <cstddef>
 #include <memory>
 #include <utility>
@@ -86,11 +87,16 @@ void World::build() {
 
 void World::update(sf::Time& dt) {
     m_view.move(m_scroll_speed * dt.asSeconds());
+    m_player->set_velocity(0.f, 0.f);
 
     // Propagate commands
     while(!m_command_queue.is_empty()) {
         m_graph.on_command(m_command_queue.pop(), dt);
     }
+
+    sf::Vector2f velocity(m_player->get_velocity());
+    if(velocity.x != 0 && velocity.y != 0) m_player->set_velocity(velocity / std::sqrt(2.f));
+    m_player->accelerate(0.f, m_scroll_speed.y);
     
     m_graph.update(dt);
 }

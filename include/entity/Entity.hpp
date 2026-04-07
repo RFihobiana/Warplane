@@ -10,6 +10,7 @@ class Entity: public SceneNode {
         void set_velocity(const float& vx, const float& vy);
         
         void accelerate(const sf::Vector2f& acceleration);
+        void accelerate(const float& ax, const float& ay);
 
         sf::Vector2f get_velocity() const;
     

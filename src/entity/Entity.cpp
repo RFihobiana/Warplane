@@ -15,6 +15,11 @@ void Entity::accelerate(const sf::Vector2f& acceleration) {
     m_velocity += acceleration;
 }
 
+void Entity::accelerate(const float& ax, const float& ay) {
+    m_velocity.x += ax;
+    m_velocity.y += ay;
+}
+
 sf::Vector2f Entity::get_velocity() const { return m_velocity; }
 
 void Entity::update_current(sf::Time& dt) {

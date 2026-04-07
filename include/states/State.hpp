@@ -36,6 +36,9 @@ class State {
 
     protected:
         Context get_context() const;
+        void request_pop();
+        void request_clear();
+        void request_push(const States::ID& state_id);
         
     private:
         StateStack& m_stack;

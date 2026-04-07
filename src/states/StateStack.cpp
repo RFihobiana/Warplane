@@ -1,6 +1,7 @@
 #include "states/StateStack.hpp"
 #include "states/StateIdentification.hpp"
 #include <SFML/System/Time.hpp>
+#include <cassert>
 
 StateStack::StateStack(State::Context ctx): m_context(ctx) {}
 
@@ -59,7 +60,10 @@ void StateStack::apply_pending_changes() {
 }
 
 State::Ptr StateStack::create_state(const States::ID& state_id) {
-    return m_factories[state_id]();
+    auto found = m_factories.find(state_id);
+    assert(found != m_factories.end());
+
+    return found->second();
 }
 
 bool StateStack::is_empty() const {

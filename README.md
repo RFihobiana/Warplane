@@ -42,15 +42,23 @@ meson compile -C build
 ## Project Structure
 
 ```txt
-warplane/
-├── src/
-│   ├── main.cpp
-│   ├── game.cpp
-│   └── player.cpp
-├── include/
-│   ├── game.h
-│   └── player.h
-└── CMakeLists.txt
+.
+├── assets
+│   ├── data
+│   ├── fonts
+│   └── images
+│       └── preview
+├── include
+│   ├── command
+│   ├── entity
+│   ├── resources
+│   └── states
+└── src
+    ├── command
+    ├── entity
+    └── states
+
+15 directories
 ```
 
 [game_screen_asset]: ./assets/images/preview/game_screen.png

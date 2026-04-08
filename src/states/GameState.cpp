@@ -14,7 +14,6 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
-#include <iostream>
 
 GameState::GameState(StateStack& stack, Context& ctx)
 : State(stack, ctx)
@@ -42,10 +41,14 @@ bool GameState::handle_events(const sf::Event& event) {
     Player& player = *get_context().player;
     player.handle_event(event, commands);
 
+    // Pause
     if(event.type == sf::Event::KeyReleased) {
         if(event.key.code == sf::Keyboard::Escape) {
             request_push(States::Pause);
         }
+    } else if(event.type == sf::Event::LostFocus) {
+        // Pause automatically
+        request_push(States::Pause);
     }
 
     return true;

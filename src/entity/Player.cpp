@@ -23,7 +23,7 @@ struct AircraftMover {
 };
 
 Player::Player() {
-    const float player_speed = 200.f;
+    const float player_speed = 400.f;
 
     m_key_binding[sf::Keyboard::W] = MoveUp;
     m_key_binding[sf::Keyboard::S] = MoveDown;
@@ -34,7 +34,7 @@ Player::Player() {
     m_action_binding[MoveLeft].action = derivated<Aircraft>(AircraftMover(-player_speed, 0.f));
     m_action_binding[MoveRight].action = derivated<Aircraft>(AircraftMover(player_speed, 0.f));
     m_action_binding[MoveUp].action = derivated<Aircraft>(AircraftMover(0.f, -player_speed));
-    m_action_binding[MoveDown].action = derivated<Aircraft>(AircraftMover(0.f, player_speed));
+    m_action_binding[MoveDown].action = derivated<Aircraft>(AircraftMover(0.f, player_speed * 1.25f));
     m_action_binding[ShowPosition].action = derivated<Aircraft>([](Aircraft& aircraft, sf::Time&) {
         const sf::Vector2f pos = aircraft.getPosition();
         std::cout

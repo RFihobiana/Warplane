@@ -3,6 +3,7 @@
 #include "entity/Player.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "states/State.hpp"
+#include "states/StateIdentification.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/View.hpp>
@@ -39,6 +40,13 @@ bool GameState::handle_events(const sf::Event& event) {
     
     Player& player = *get_context().player;
     player.handle_event(event, commands);
+
+    if(event.type == sf::Event::KeyReleased) {
+        if(event.key.code == sf::Keyboard::Escape) {
+            request_pop();
+            request_push(States::MainMenu);
+        }
+    }
 
     return true;
 }

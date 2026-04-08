@@ -74,13 +74,7 @@ void Application::process_events() {
     
     while(m_window.pollEvent(event)) {
 
-        if(
-            event.type == sf::Event::Closed
-            || (
-                event.type == sf::Event::KeyReleased
-                && event.key.code == sf::Keyboard::Escape
-            )
-        ) m_window.close();
+        if( event.type == sf::Event::Closed) m_window.close();
         else if(event.type == sf::Event::GainedFocus) m_is_paused = false;
         else if(event.type == sf::Event::LostFocus) m_is_paused = true;
         

@@ -1,6 +1,7 @@
 #include "states/MenuState.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "states/State.hpp"
+#include "states/StateIdentification.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
@@ -101,6 +102,19 @@ bool MenuState::handle_events(const sf::Event& event) {
 
         else if(event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down) {
             m_selected_option = (m_selected_option + 1) % m_options.size();
+        }
+
+        if(event.key.code == sf::Keyboard::Enter) {
+            switch (m_selected_option) {
+                case Play:
+                    request_pop();
+                    request_push(States::Game);
+                    break;
+
+                case Quit:
+                    request_pop();
+                    break;
+            }
         }
     }
     return false;

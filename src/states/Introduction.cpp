@@ -13,7 +13,7 @@
 #include <string>
 
 const sf::Color text_color(0x56, 0xe1, 0xe9);
-const sf::Color background_color(0x0a, 0x23, 0x53);
+const sf::Color background_color(0x10, 0x74, 0xa6);
 
 Introduction::Introduction(StateStack& stack, Context& ctx)
 : State(stack, ctx)

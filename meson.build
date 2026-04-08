@@ -1,6 +1,7 @@
 project(
     'War-Plane',
-    'cpp'
+    'cpp',
+    default_options: ['cpp_std=c++20']
 )
 
 sources = files(

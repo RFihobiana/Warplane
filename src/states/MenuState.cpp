@@ -104,7 +104,7 @@ bool MenuState::handle_events(const sf::Event& event) {
             m_selected_option = (m_selected_option + 1) % m_options.size();
         }
 
-        if(event.key.code == sf::Keyboard::Enter) {
+        if(event.key.code == sf::Keyboard::Enter || event.key.code == sf::Keyboard::E) {
             switch (m_selected_option) {
                 case Play:
                     request_pop();

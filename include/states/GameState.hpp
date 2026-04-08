@@ -1,8 +1,6 @@
 #pragma once
 
 #include "World.hpp"
-#include "entity/Player.hpp"
-#include "resources/ResourceIdentifier.hpp"
 #include "states/State.hpp"
 #include "states/StateStack.hpp"
 #include <SFML/Graphics.hpp>

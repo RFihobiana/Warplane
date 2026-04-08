@@ -4,6 +4,7 @@
 #include "states/StateIdentification.hpp"
 #include "states/StateStack.hpp"
 #include "utilities.hpp"
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
@@ -41,6 +42,7 @@ PauseState::PauseState(StateStack& stack, Context& ctx)
     file.close();
 
     m_instruction.setString(lines.str());
+    m_instruction.setFillColor(sf::Color(0xcc, 0xcc, 0xcc, 0xa0));
     center_origin(m_instruction);
     m_instruction.setPosition(
         view_size.x * 0.5f,

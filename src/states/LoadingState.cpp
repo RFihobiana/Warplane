@@ -9,8 +9,8 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
-#include <iomanip>
-#include <sstream>
+#include <format>
+#include <string>
 
 LoadingState::LoadingState(StateStack& stack, Context& ctx)
 : State(stack, ctx)
@@ -73,15 +73,7 @@ bool LoadingState::update(sf::Time& dt) {
         request_push(States::Game);
     } else set_completion(completion);
 
-    std::stringstream loading_text;
-    loading_text 
-        << "Loading Resources " 
-        << std::setfill('0')
-        << std::setw(2)
-        << static_cast<int>(completion * 100) << "% ...";
-
-    m_loading_text.setString(loading_text.str());
-
-
+    std::string loading_text = std::format("Loading Resources {:02}% ...", static_cast<int>(completion * 100));
+    m_loading_text.setString(loading_text);
     return true;
 }

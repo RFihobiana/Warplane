@@ -16,7 +16,7 @@ A 2D warplane game developed with SFML (Simple and Fast Multimedia Library) in C
 
 ## Requirements
 
-- C++11 or later
+- C++20 or later
 - SFML 2.5+
 - Meson
 

@@ -9,31 +9,29 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
+#include <sstream>
 
 LoadingState::LoadingState(StateStack& stack, Context& ctx)
 : State(stack, ctx)
-, m_loading_text("Loading Resources", ctx.fonts->get(Fonts::main)) {
+, m_loading_text("Loading Resources...", ctx.fonts->get(Fonts::main)) {
     sf::Vector2f view_size = ctx.window->getDefaultView().getSize();
 
     // Loading text
     center_origin(m_loading_text);
-    m_loading_text.setPosition(
-        view_size.x / 2.f,
-        view_size.y / 2 + 50
-    );
+    m_loading_text.setPosition(view_size / 2.f);
 
     // Background
     m_progress_bar_bg.setFillColor(sf::Color::White);
     m_progress_bar_bg.setSize(sf::Vector2f(
         view_size.x - 20,
-        10.f
+        20.f
     ));
     m_progress_bar_bg.setPosition(
         10.f,
         m_loading_text.getPosition().y + 40
     );
 
-    m_progress_bar.setFillColor(sf::Color(0x64, 0x64, 0x64));
+    m_progress_bar.setFillColor(sf::Color(0x98, 0xdc, 0x42, 0xda));
     m_progress_bar.setSize(sf::Vector2f(
         0.f,
         m_progress_bar_bg.getSize().y
@@ -66,11 +64,18 @@ bool LoadingState::handle_events(const sf::Event& event) {
 }
 
 bool LoadingState::update(sf::Time& dt) {
+    
+    const float completion = m_task.get_completion();
 
     if(m_task.is_finished()) {
         request_pop();
         request_push(States::Game);
-    } else set_completion(m_task.get_completion());
+    } else set_completion(completion);
+
+    std::stringstream loading_text;
+    loading_text << "Loading Resources " << static_cast<int>(completion * 100) << "% ...";
+
+    m_loading_text.setString(loading_text.str());
 
     return true;
 }

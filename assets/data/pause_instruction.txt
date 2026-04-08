@@ -1,2 +1,2 @@
-<Escape>    Play
+<Escape>        Play
 <Backspace> Menu

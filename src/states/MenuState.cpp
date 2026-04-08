@@ -108,7 +108,7 @@ bool MenuState::handle_events(const sf::Event& event) {
             switch (m_selected_option) {
                 case Play:
                     request_pop();
-                    request_push(States::Game);
+                    request_push(States::Loading);
                     break;
 
                 case Quit:

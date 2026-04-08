@@ -2,6 +2,7 @@
 #include "resources/ResourceIdentifier.hpp"
 #include "states/GameState.hpp"
 #include "states/Introduction.hpp"
+#include "states/LoadingState.hpp"
 #include "states/MenuState.hpp"
 #include "states/PauseState.hpp"
 #include "states/State.hpp"
@@ -43,6 +44,7 @@ void Application::initialize_stacks() {
     m_stack.register_state<GameState>(States::Game);
     m_stack.register_state<MenuState>(States::MainMenu);
     m_stack.register_state<PauseState>(States::Pause);
+    m_stack.register_state<LoadingState>(States::Loading);
 }
 
 void Application::run() {

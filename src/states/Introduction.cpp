@@ -6,13 +6,15 @@
 #include "utilities.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
 #include <fstream>
 #include <sstream>
 #include <string>
 
-const sf::Color text_color(0x56, 0xe1, 0xe9);
+// const sf::Color text_color(0x56, 0xe1, 0xe9);
+const sf::Color text_color(0xbf, 0xaf, 0x42);
 const sf::Color background_color(0x10, 0x74, 0xa6);
 
 Introduction::Introduction(StateStack& stack, Context& ctx)
@@ -28,6 +30,7 @@ Introduction::Introduction(StateStack& stack, Context& ctx)
         instruction_simple_text << line << '\n';
     }
     m_text.setString(instruction_simple_text.str());
+    m_text.setStyle(sf::Text::Bold);
 
     m_text.setFillColor(text_color);
     center_origin(m_text);

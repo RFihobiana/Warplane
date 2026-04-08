@@ -3,9 +3,9 @@
 
 A 2D warplane game developed with SFML (Simple and Fast Multimedia Library) in C++.
 
-| Intro | Game |
-| :---: | :---: |
-| ![Intro Screen][intro_screen_asset] | ![Game Screen][game_screen_asset] |
+| Intro | Menu | Game |
+| :---: | :---: | :---: |
+| ![Intro Preview][intro_screen_asset] | ![Menu Preview][menu_screen_asset] | ![Game Preview][game_screen_asset] |
 
 ## Features
 
@@ -55,3 +55,4 @@ warplane/
 
 [game_screen_asset]: ./assets/images/preview/game_screen.png
 [intro_screen_asset]: ./assets/images/preview/intro.png
+[menu_screen_asset]: ./assets/images/preview/menu.png

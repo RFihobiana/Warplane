@@ -18,7 +18,7 @@ class StateStack: private sf::NonCopyable {
         };
 
     public:
-        StateStack(State::Context ctx);
+        explicit StateStack(State::Context ctx);
 
         template<typename T>
         void register_state(const States::ID state_id);

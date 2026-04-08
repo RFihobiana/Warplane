@@ -48,7 +48,7 @@ bool Introduction::update(sf::Time& dt) {
 bool Introduction::handle_events(const sf::Event& event) {
     if(event.type == sf::Event::KeyReleased) {
         request_pop();
-        request_push(States::Game);
+        request_push(States::MainMenu);
     }
 
     return false;

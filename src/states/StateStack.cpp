@@ -6,16 +6,16 @@
 StateStack::StateStack(State::Context ctx): m_context(ctx) {}
 
 void StateStack::update(sf::Time& dt) {
-    for(auto& state: m_stack) {
-        if(!state->update(dt)) break;
+    for(auto iter = m_stack.rbegin(); iter != m_stack.rend(); iter++) {
+        if(!(*iter)->update(dt)) break;
     }
 
     apply_pending_changes();
 }
 
 void StateStack::handle_events(const sf::Event& event) {
-    for(auto& state: m_stack) {
-        if(!state->handle_events(event)) break;
+    for(auto iter = m_stack.rbegin(); iter != m_stack.rend(); iter++) {
+        if(!(*iter)->handle_events(event)) break;
     }
 
     apply_pending_changes();

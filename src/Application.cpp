@@ -4,6 +4,7 @@
 #include "resources/ResourceIdentifier.hpp"
 #include "states/GameState.hpp"
 #include "states/Introduction.hpp"
+#include "states/MenuState.hpp"
 #include "states/State.hpp"
 #include "states/StateIdentification.hpp"
 #include <SFML/Graphics/Color.hpp>
@@ -43,6 +44,7 @@ void Application::load_resources() {
 void Application::initialize_stacks() {
     m_stack.register_state<Introduction>(States::Introduction);
     m_stack.register_state<GameState>(States::Game);
+    m_stack.register_state<MenuState>(States::MainMenu);
 }
 
 void Application::run() {

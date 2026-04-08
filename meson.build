@@ -23,6 +23,7 @@ sources = files(
     'src/states/Introduction.cpp',
     'src/states/MenuState.cpp',
     'src/states/GameState.cpp',
+    'src/states/PauseState.cpp',
 )
 
 executable(

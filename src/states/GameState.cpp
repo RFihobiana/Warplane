@@ -43,8 +43,7 @@ bool GameState::handle_events(const sf::Event& event) {
 
     if(event.type == sf::Event::KeyReleased) {
         if(event.key.code == sf::Keyboard::Escape) {
-            request_pop();
-            request_push(States::MainMenu);
+            request_push(States::Pause);
         }
     }
 

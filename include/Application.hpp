@@ -37,7 +37,5 @@ class Application {
 
         sf::Text m_text;
 
-        bool m_is_paused;
-
         StateStack m_stack;
 };

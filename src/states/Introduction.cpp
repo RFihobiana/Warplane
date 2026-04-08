@@ -13,7 +13,6 @@
 #include <sstream>
 #include <string>
 
-// const sf::Color text_color(0x56, 0xe1, 0xe9);
 const sf::Color text_color(0xbf, 0xaf, 0x42);
 const sf::Color background_color(0x10, 0x74, 0xa6);
 

@@ -1,10 +1,9 @@
 #include "Application.hpp"
-#include "command/CommandQueue.hpp"
-#include "entity/Aircraft.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "states/GameState.hpp"
 #include "states/Introduction.hpp"
 #include "states/MenuState.hpp"
+#include "states/PauseState.hpp"
 #include "states/State.hpp"
 #include "states/StateIdentification.hpp"
 #include <SFML/Graphics/Color.hpp>
@@ -18,13 +17,11 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
 #include <string>
-#include <utility>
 
 Application::Application()
 : m_window(sf::VideoMode(1240, 1024), "War Plane")
 , m_player()
 , m_text()
-, m_is_paused(false)
 , m_stack(State::Context(m_window, m_textures, m_font_holder, m_player)) {
     load_resources();
     initialize_stacks();
@@ -45,6 +42,7 @@ void Application::initialize_stacks() {
     m_stack.register_state<Introduction>(States::Introduction);
     m_stack.register_state<GameState>(States::Game);
     m_stack.register_state<MenuState>(States::MainMenu);
+    m_stack.register_state<PauseState>(States::Pause);
 }
 
 void Application::run() {
@@ -58,7 +56,7 @@ void Application::run() {
             time_since_last_update -= fps
         ) {
             process_events();
-            if(!m_is_paused) update(fps);
+            update(fps);
             update_static_texts(fps);
 
             if(m_stack.is_empty()) m_window.close();
@@ -75,8 +73,6 @@ void Application::process_events() {
     while(m_window.pollEvent(event)) {
 
         if( event.type == sf::Event::Closed) m_window.close();
-        else if(event.type == sf::Event::GainedFocus) m_is_paused = false;
-        else if(event.type == sf::Event::LostFocus) m_is_paused = true;
         
         m_stack.handle_events(event);
     }

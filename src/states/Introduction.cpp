@@ -28,6 +28,9 @@ Introduction::Introduction(StateStack& stack, Context& ctx)
         std::getline(f, line);
         instruction_simple_text << line << '\n';
     }
+
+    f.close();
+    
     m_text.setString(instruction_simple_text.str());
     m_text.setStyle(sf::Text::Bold);
 

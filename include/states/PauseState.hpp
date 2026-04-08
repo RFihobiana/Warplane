@@ -3,6 +3,7 @@
 #include "states/State.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Event.hpp>
 class PauseState: public State {
@@ -16,4 +17,7 @@ class PauseState: public State {
     private:
         sf::Color m_bg_color;
         sf::RectangleShape m_background;
+
+        sf::Text    m_pause_title;
+        sf::Text    m_instruction;
 };

@@ -39,9 +39,9 @@ World::World(sf::RenderWindow& window, TextureHolder& textures)
 
 void World::load_resources() {
     // Textures
-    m_textures.load(Textures::Eagle, "./assets/images/Eagle.png");
-    m_textures.load(Textures::Raptor, "./assets/images/Raptor.png");
-    m_textures.load(Textures::Landscape, "./assets/images/Desert.png");
+    if(!m_textures.has(Textures::Eagle)) m_textures.load(Textures::Eagle, "./assets/images/Eagle.png");
+    if(!m_textures.has(Textures::Raptor)) m_textures.load(Textures::Raptor, "./assets/images/Raptor.png");
+    if(!m_textures.has(Textures::Landscape)) m_textures.load(Textures::Landscape, "./assets/images/Desert.png");
 }
 
 void World::build() {

@@ -24,6 +24,9 @@ void ResourceHolder<ResourceID, Resource>::load(const ResourceID& id, const std:
     if(!resource->loadFromFile(filename, second_param)) {
         throw std::runtime_error("ResourceHolder::load - Failed to load " + filename);
     }
+    
+    auto inserted = m_data.insert(std::make_pair(id, std::move(resource)));
+    assert(inserted.second);
 }
 
 template<typename ResourceID, typename Resource>

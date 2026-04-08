@@ -14,6 +14,7 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
+#include <iostream>
 
 GameState::GameState(StateStack& stack, Context& ctx)
 : State(stack, ctx)

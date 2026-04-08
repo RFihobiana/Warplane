@@ -9,6 +9,7 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
+#include <SFML/Window/Keyboard.hpp>
 #include <array>
 #include <cstddef>
 
@@ -93,10 +94,28 @@ void MenuState::draw() const {
 }
 
 bool MenuState::handle_events(const sf::Event& event) {
+    if(event.type == sf::Event::KeyReleased) {
+        if(event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up) {
+            m_selected_option = (m_selected_option - 1) % m_options.size();
+        }
+
+        else if(event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down) {
+            m_selected_option = (m_selected_option + 1) % m_options.size();
+        }
+    }
     return false;
 }
 
 bool MenuState::update(sf::Time& dt) {
+    const sf::Color default_color(sf::Color::White);
+    const sf::Color selected_color(sf::Color::Red);
+
+    for(sf::Text& text: m_options) {
+        text.setFillColor(default_color);
+    }
+
+    m_options[m_selected_option].setFillColor(selected_color);
+
     return false;
 }
 

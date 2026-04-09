@@ -37,6 +37,11 @@ void Application::load_resources() {
     // Fonts
     m_font_holder.load(Fonts::main, "./assets/fonts/Sansation.ttf");
     m_font_holder.load(Fonts::Hanalei, "./assets/fonts/Hanalei.ttf");
+
+    // Textures
+    m_textures.load(Textures::ButtonNormal, "./assets/images/buttons/ButtonNormal.png");
+    m_textures.load(Textures::ButtonPressed, "./assets/images/buttons/ButtonPressed.png");
+    m_textures.load(Textures::ButtonSelected, "./assets/images/buttons/ButtonSelected.png");
 }
 
 void Application::initialize_stacks() {

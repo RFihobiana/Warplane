@@ -1,4 +1,5 @@
 #include "states/MenuState.hpp"
+#include "GUI/Button.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "states/State.hpp"
 #include "states/StateIdentification.hpp"
@@ -13,10 +14,12 @@
 #include <SFML/Window/Keyboard.hpp>
 #include <array>
 #include <cstddef>
+#include <memory>
 
 MenuState::MenuState(StateStack& stack, Context& ctx)
 : State(stack, ctx)
-, m_selected_option(0) {
+, m_selected_option(0)
+, btn(std::make_shared<GUI::Button>(*ctx.textures)) {
     setup_options();
     setup_background();
 }
@@ -92,6 +95,8 @@ void MenuState::draw() const {
     for(const sf::Text& text: m_options) {
         window.draw(text);
     }
+
+    window.draw(*btn);
 }
 
 bool MenuState::handle_events(const sf::Event& event) {

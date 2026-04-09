@@ -1,5 +1,6 @@
 #pragma once
 
+#include "GUI/Button.hpp"
 #include "states/State.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
@@ -25,7 +26,6 @@ class MenuState: public State {
             OptionCount,
         };
 
-
     private:
         void setup_options();
         void setup_background();
@@ -35,4 +35,5 @@ class MenuState: public State {
         std::size_t m_selected_option;
 
         std::vector<sf::RectangleShape> m_backgrounds;
+        GUI::Button::Ptr btn;
 };

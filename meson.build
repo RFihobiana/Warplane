@@ -27,6 +27,9 @@ sources = files(
     'src/states/PauseState.cpp',
     'src/states/ParallelTask.cpp',
     'src/states/LoadingState.cpp',
+
+    'src/GUI/Component.cpp',
+    'src/GUI/Button.cpp',
 )
 
 executable(

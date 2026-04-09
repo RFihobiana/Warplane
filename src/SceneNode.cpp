@@ -20,7 +20,7 @@ void SceneNode::attach_child(SceneNode::Ptr child) {
 }
 
 SceneNode::Ptr SceneNode::dettach_child(const SceneNode& node) {
-    const auto found = std::find_if(m_children.begin(), m_children.end(), [&node](Ptr& child) -> bool {
+    const auto found = std::ranges::find_if(m_children, [&node](const Ptr& child) -> bool {
         return child.get() == &node;
     });
 

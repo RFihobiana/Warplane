@@ -15,6 +15,8 @@ namespace GUI {
 
         public:
             Label(const FontHolder& font, const std::string& text_value = "");
+
+            void center_origin();
             
             virtual bool is_selectable() const;
             virtual void handle_events(const sf::Event& event);

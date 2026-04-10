@@ -19,6 +19,8 @@ sources = files(
     'src/command/CommandQueue.cpp',
     'src/entity/Player.cpp',
 
+    'src/log/Log.cpp',
+
     'src/states/StateStack.cpp',
     'src/states/State.cpp',
     'src/states/Introduction.cpp',
@@ -32,6 +34,7 @@ sources = files(
     'src/GUI/Label.cpp',
     'src/GUI/Button.cpp',
     'src/GUI/Container.cpp',
+    'src/GUI/Logger.cpp',
 )
 
 executable(

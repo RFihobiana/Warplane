@@ -1,5 +1,6 @@
 #pragma once
 
+#include "GUI/Logger.hpp"
 #include "entity/Player.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "states/StateIdentification.hpp"
@@ -18,17 +19,20 @@ class State {
             TextureHolder*      textures;
             FontHolder*         fonts;
             Player*             player;
+            GUI::Logger*    logger;
 
             Context(
                 sf::RenderWindow&   window,
                 TextureHolder&      textures,
                 FontHolder&         fonts,
-                Player&             player
+                Player&             player,
+                GUI::Logger&        logger
             )
             : window(&window)
             , textures(&textures)
             , fonts(&fonts)
-            , player(&player) {}
+            , player(&player)
+            , logger(&logger) {}
         };
         
     public:

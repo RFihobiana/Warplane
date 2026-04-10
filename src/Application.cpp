@@ -1,4 +1,5 @@
 #include "Application.hpp"
+#include "GUI/Logger.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "states/GameState.hpp"
 #include "states/Introduction.hpp"
@@ -17,20 +18,37 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <SFML/Window/VideoMode.hpp>
+#include <memory>
 #include <string>
 
 Application::Application()
 : m_window(sf::VideoMode(1240, 1024), "War Plane")
 , m_player()
 , m_text()
-, m_stack(State::Context(m_window, m_textures, m_font_holder, m_player)) {
+, m_logger(std::make_shared<GUI::Logger>(m_textures, m_font_holder))
+, m_stack(State::Context(m_window, m_textures, m_font_holder, m_player, *m_logger)) {
     load_resources();
+    setup_logger();
     initialize_stacks();
 
     // Setup fonts
     m_text.setFont(m_font_holder.get(Fonts::main));
-
     m_stack.pushState(States::Introduction);
+
+    m_logger->add("Ready Launch!");
+}
+
+void Application::setup_logger() {
+    const sf::Vector2f win_size(m_window.getSize());
+    const float bg_percent = 0.30f;
+    m_logger->setPosition(
+        win_size.x * (1 - bg_percent),
+        0.f
+    );
+    m_logger->set_bg_size(
+        win_size.x * bg_percent,
+        win_size.y
+    );
 }
 
 void Application::load_resources() {
@@ -42,6 +60,8 @@ void Application::load_resources() {
     m_textures.load(Textures::ButtonNormal, "./assets/images/buttons/ButtonNormal.png");
     m_textures.load(Textures::ButtonPressed, "./assets/images/buttons/ButtonPressed.png");
     m_textures.load(Textures::ButtonSelected, "./assets/images/buttons/ButtonSelected.png");
+
+    m_logger->add("Resource loaded successfully");
 }
 
 void Application::initialize_stacks() {
@@ -116,6 +136,7 @@ void Application::draw() {
     
     m_window.setView(m_window.getDefaultView());
     m_window.draw(m_text);
+    m_window.draw(*m_logger);
 
     m_window.display();
 }

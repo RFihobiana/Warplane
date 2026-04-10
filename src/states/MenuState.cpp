@@ -30,6 +30,7 @@ void MenuState::setup_options() {
     const float SPACE_BETWEEN = 60.f;
 
     GUI::Label::Ptr title = std::make_shared<GUI::Label>(fonts, "Let's Fly!");
+    title->center_origin();
     m_container.pack(title);
 
     GUI::Button::Ptr start = std::make_shared<GUI::Button>(textures, fonts, "Start");

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "GUI/Logger.hpp"
 #include "entity/Player.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "states/StateStack.hpp"
@@ -20,6 +21,7 @@ class Application {
 
     private:
         void load_resources();
+        void setup_logger();
         void initialize_stacks();
 
         void process_events();
@@ -36,6 +38,7 @@ class Application {
         Player          m_player;
 
         sf::Text m_text;
+        GUI::Logger::Ptr m_logger;
 
         StateStack m_stack;
 };

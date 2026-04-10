@@ -11,7 +11,10 @@ namespace GUI {
     Label::Label(const FontHolder& fonts, const std::string& text_value)
     : Component()
     , m_text(text_value, fonts.get(Fonts::main)) {
-        center_origin(m_text);
+    }
+
+    void Label::center_origin() {
+        ::center_origin(m_text);
     }
 
     bool Label::is_selectable() const { return false; }

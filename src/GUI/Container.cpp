@@ -2,6 +2,7 @@
 #include "GUI/Component.hpp"
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
+#include <algorithm>
 
 namespace GUI {
     Container::Container(): m_selected_child(-1) {}
@@ -37,6 +38,10 @@ namespace GUI {
     void Container::select_at(const int index) {
         if(!m_children[index]->is_selectable()) return;
 
+        std::ranges::for_each(m_children, [](auto& child) {
+            child->deselect();
+        });
+        
         m_selected_child = index;
         m_children[m_selected_child]->select();
     }

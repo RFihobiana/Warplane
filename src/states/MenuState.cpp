@@ -1,48 +1,24 @@
 #include "states/MenuState.hpp"
-#include "GUI/Button.hpp"
+#include "GUI/Label.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "states/State.hpp"
-#include "states/StateIdentification.hpp"
-#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Time.hpp>
-#include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <array>
 #include <cstddef>
-#include <memory>
 
 MenuState::MenuState(StateStack& stack, Context& ctx)
-: State(stack, ctx)
-, m_selected_option(0)
-, btn(std::make_shared<GUI::Button>(*ctx.textures)) {
+: State(stack, ctx) {
     setup_options();
     setup_background();
 }
 
 void MenuState::setup_options() {
-    sf::Text play("Play", get_context().fonts->get(Fonts::main));
-    sf::Text quit("Quit", get_context().fonts->get(Fonts::main));
-    
-    m_options[Play] = play;
-    m_options[Quit] = quit;
-
-    const float distance_between = 50.f;
-    const sf::Vector2f from_pos = sf::Vector2f(get_context().window->getSize()) / 2.5f;
-    for(size_t i = 0; i < m_options.size(); i++) {
-        sf::Text& text(m_options[i]);
-        
-        sf::Vector2f position(
-            0.f,
-            distance_between * i
-        );
-
-        text.setPosition(from_pos + position);
-    }
 }
 
 void MenuState::setup_background() {
@@ -87,54 +63,22 @@ void MenuState::setup_background() {
 
 void MenuState::draw() const {
     sf::RenderWindow& window = *get_context().window;
+    window.setView(window.getDefaultView());
 
     for(const auto& shape: m_backgrounds) {
         window.draw(shape);
     }
 
-    for(const sf::Text& text: m_options) {
-        window.draw(text);
-    }
-
-    window.draw(*btn);
+    GUI::Label lab(*get_context().fonts, "go go go!");
+    lab.setPosition(window.getDefaultView().getSize() / 2.f);
+    window.draw(lab);
 }
 
 bool MenuState::handle_events(const sf::Event& event) {
-    if(event.type == sf::Event::KeyReleased) {
-        if(event.key.code == sf::Keyboard::W || event.key.code == sf::Keyboard::Up) {
-            m_selected_option = (m_selected_option - 1) % m_options.size();
-        }
-
-        else if(event.key.code == sf::Keyboard::S || event.key.code == sf::Keyboard::Down) {
-            m_selected_option = (m_selected_option + 1) % m_options.size();
-        }
-
-        if(event.key.code == sf::Keyboard::Enter || event.key.code == sf::Keyboard::E) {
-            switch (m_selected_option) {
-                case Play:
-                    request_pop();
-                    request_push(States::Loading);
-                    break;
-
-                case Quit:
-                    request_pop();
-                    break;
-            }
-        }
-    }
     return false;
 }
 
 bool MenuState::update(sf::Time& dt) {
-    const sf::Color default_color(sf::Color::White);
-    const sf::Color selected_color(sf::Color::Red);
-
-    for(sf::Text& text: m_options) {
-        text.setFillColor(default_color);
-    }
-
-    m_options[m_selected_option].setFillColor(selected_color);
-
     return false;
 }
 

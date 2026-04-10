@@ -30,7 +30,7 @@ Application::Application()
     // Setup fonts
     m_text.setFont(m_font_holder.get(Fonts::main));
 
-    m_stack.pushState(States::Introduction);
+    m_stack.pushState(States::MainMenu);
 }
 
 void Application::load_resources() {
@@ -111,7 +111,6 @@ void Application::update_static_texts(sf::Time dt) {
 
 void Application::draw() {
     m_window.clear();
-
 
     m_stack.draw();
     

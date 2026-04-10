@@ -29,7 +29,7 @@ sources = files(
     'src/states/LoadingState.cpp',
 
     'src/GUI/Component.cpp',
-    'src/GUI/Button.cpp',
+    'src/GUI/Label.cpp',
 )
 
 executable(

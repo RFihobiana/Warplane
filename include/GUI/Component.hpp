@@ -4,6 +4,7 @@
 #include <SFML/Graphics/Drawable.hpp>
 #include <SFML/Graphics/Transformable.hpp>
 #include <SFML/System/NonCopyable.hpp>
+#include <SFML/Window/Event.hpp>
 #include <memory>
 namespace GUI {
     class Component: public sf::Drawable,
@@ -24,6 +25,8 @@ namespace GUI {
             virtual void activate();
             virtual void deactivate();
             bool is_active();
+
+            virtual void handle_events(const sf::Event& event) = 0;
 
         private:
             bool m_is_selected;

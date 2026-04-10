@@ -4,6 +4,7 @@
 #include "utilities.hpp"
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Window/Event.hpp>
 #include <string>
 
 namespace GUI {
@@ -14,6 +15,8 @@ namespace GUI {
     }
 
     bool Label::is_selectable() const { return false; }
+
+    void Label::handle_events(const sf::Event& event) {}
 
     void Label::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         states.transform *= getTransform();

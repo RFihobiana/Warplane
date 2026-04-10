@@ -1,8 +1,10 @@
 #include "GUI/Button.hpp"
+#include "GUI/Component.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "utilities.hpp"
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
+#include <SFML/Window/Event.hpp>
 #include <string>
 
 namespace GUI {
@@ -23,6 +25,18 @@ namespace GUI {
     }
 
     bool Button::is_selectable() const { return true; }
+
+    void Button::select() {
+        Component::select();
+        m_sprite.setTexture(m_selected_texture);
+    }
+
+    void Button::deselect() {
+        Component::deselect();
+        m_sprite.setTexture(m_normal_texture);
+    }
+
+    void Button::handle_events(const sf::Event& event) {}
 
     void Button::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         states.transform *= getTransform();

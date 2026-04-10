@@ -91,6 +91,7 @@ void MenuState::draw() const {
 }
 
 bool MenuState::handle_events(const sf::Event& event) {
+    m_container.handle_events(event);
     return false;
 }
 

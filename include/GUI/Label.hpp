@@ -5,6 +5,7 @@
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Window/Event.hpp>
 #include <memory>
 #include <string>
 namespace GUI {
@@ -16,6 +17,7 @@ namespace GUI {
             Label(const FontHolder& font, const std::string& text_value = "");
             
             virtual bool is_selectable() const;
+            virtual void handle_events(const sf::Event& event);
 
         private:
             virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

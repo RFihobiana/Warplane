@@ -2,7 +2,8 @@
 
 namespace GUI {
     Component::Component()
-    : m_is_selected(false) {}
+    : m_is_selected(false)
+    , m_is_active(false) {}
 
     void Component::select() { m_is_selected = true; }
     void Component::deselect() { m_is_selected = false; }

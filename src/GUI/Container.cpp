@@ -3,14 +3,16 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <algorithm>
+#include <iostream>
 
 namespace GUI {
-    Container::Container(): m_selected_child(-1) {}
+    Container::Container() : m_selected_child(-1) {}
 
     bool  Container::is_selectable() const { return false; }
 
     void Container::handle_events(const sf::Event& event) {
         if(has_selection() && m_children[m_selected_child]->is_active()) {
+            std::cout << "Some key activated" << std::endl;
             m_children[m_selected_child]->handle_events(event);
         }
         

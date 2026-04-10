@@ -3,6 +3,7 @@
 #include "GUI/Label.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "states/State.hpp"
+#include "states/StateIdentification.hpp"
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -16,7 +17,8 @@
 #include <memory>
 
 MenuState::MenuState(StateStack& stack, Context& ctx)
-: State(stack, ctx) {
+: State(stack, ctx)
+, m_container() {
     m_container.setPosition(ctx.window->getDefaultView().getSize() * 0.2f);
     setup_options();
     setup_background();
@@ -32,10 +34,22 @@ void MenuState::setup_options() {
 
     GUI::Button::Ptr start = std::make_shared<GUI::Button>(textures, fonts, "Start");
     start->setPosition(title->getPosition() + sf::Vector2f(0.f, SPACE_BETWEEN));
+    start->set_toggle(true);
+    
+    start->set_callback([this] (){
+        request_pop();
+        request_push(States::Loading);
+    });
+
     m_container.pack(start);
     
     GUI::Button::Ptr quit = std::make_shared<GUI::Button>(textures, fonts, "Quit");
     quit->setPosition(start->getPosition() + sf::Vector2f(0.f, SPACE_BETWEEN));
+    quit->set_toggle(true);
+
+    quit->set_callback([this]() {
+        request_pop();
+    });
     m_container.pack(quit);
 }
 

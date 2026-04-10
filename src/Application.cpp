@@ -30,7 +30,7 @@ Application::Application()
     // Setup fonts
     m_text.setFont(m_font_holder.get(Fonts::main));
 
-    m_stack.pushState(States::MainMenu);
+    m_stack.pushState(States::Introduction);
 }
 
 void Application::load_resources() {

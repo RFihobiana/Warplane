@@ -61,6 +61,10 @@ namespace GUI {
         m_bg_rect.setSize(sf::Vector2f(width, height));
     }
 
+    void Logger::hide(const bool status) {
+        m_hide = status;
+    }
+
     void Logger::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         if(m_hide) return;
         

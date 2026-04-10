@@ -51,6 +51,7 @@ meson compile -C build
 - **ESC**: Quit the game
 - **Up / Down / W / S**: Navigate menu options
 - **Enter / Space / E**: Select a menu button
+- **H**: Show or Hide Log on the right panel
 
 ## Project Structure
 

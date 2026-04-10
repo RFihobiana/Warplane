@@ -29,6 +29,8 @@ namespace GUI {
             void set_bg_size(const sf::Vector2f size);
             void set_bg_size(const float width, const float height);
 
+            void hide(const bool status);
+
         private:
             virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 

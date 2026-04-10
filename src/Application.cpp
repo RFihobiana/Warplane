@@ -27,6 +27,8 @@ Application::Application()
 , m_text()
 , m_logger(std::make_shared<GUI::Logger>(m_textures, m_font_holder))
 , m_stack(State::Context(m_window, m_textures, m_font_holder, m_player, *m_logger)) {
+    m_logger->hide(true);
+
     load_resources();
     m_logger->add("Resource loaded successfully");
 

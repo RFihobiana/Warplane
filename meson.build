@@ -31,6 +31,7 @@ sources = files(
     'src/GUI/Component.cpp',
     'src/GUI/Label.cpp',
     'src/GUI/Button.cpp',
+    'src/GUI/Container.cpp',
 )
 
 executable(

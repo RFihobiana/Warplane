@@ -19,6 +19,7 @@ namespace GUI {
     , m_sprite(m_normal_texture) {
         center_origin(m_text);
         center_origin(m_sprite);
+        m_text.move(0.f, -5.5f);
     }
 
     bool Button::is_selectable() const { return true; }

@@ -8,18 +8,35 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Time.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <array>
 #include <cstddef>
+#include <memory>
 
 MenuState::MenuState(StateStack& stack, Context& ctx)
 : State(stack, ctx) {
+    m_container.setPosition(ctx.window->getDefaultView().getSize() * 0.2f);
     setup_options();
     setup_background();
 }
 
 void MenuState::setup_options() {
+    const FontHolder& fonts = *get_context().fonts;
+    const TextureHolder& textures = *get_context().textures;
+    const float SPACE_BETWEEN = 60.f;
+
+    GUI::Label::Ptr title = std::make_shared<GUI::Label>(fonts, "Let's Fly!");
+    m_container.pack(title);
+
+    GUI::Button::Ptr start = std::make_shared<GUI::Button>(textures, fonts, "Start");
+    start->setPosition(title->getPosition() + sf::Vector2f(0.f, SPACE_BETWEEN));
+    m_container.pack(start);
+    
+    GUI::Button::Ptr quit = std::make_shared<GUI::Button>(textures, fonts, "Quit");
+    quit->setPosition(start->getPosition() + sf::Vector2f(0.f, SPACE_BETWEEN));
+    m_container.pack(quit);
 }
 
 void MenuState::setup_background() {
@@ -69,10 +86,8 @@ void MenuState::draw() const {
     for(const auto& shape: m_backgrounds) {
         window.draw(shape);
     }
-
-    GUI::Button btn(*get_context().textures, *get_context().fonts, "Play");
-    btn.setPosition(window.getDefaultView().getSize() / 2.f);
-    window.draw(btn);
+    
+    window.draw(m_container);
 }
 
 bool MenuState::handle_events(const sf::Event& event) {

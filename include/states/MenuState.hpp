@@ -1,5 +1,6 @@
 #pragma once
 
+#include "GUI/Container.hpp"
 #include "states/State.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
@@ -22,4 +23,5 @@ class MenuState: public State {
 
     private:
         std::vector<sf::RectangleShape> m_backgrounds;
+        GUI::Container  m_container;
 };

@@ -28,14 +28,20 @@ Application::Application()
 , m_logger(std::make_shared<GUI::Logger>(m_textures, m_font_holder))
 , m_stack(State::Context(m_window, m_textures, m_font_holder, m_player, *m_logger)) {
     load_resources();
+    m_logger->add("Resource loaded successfully");
+
     setup_logger();
+    m_logger->add("Logger ok");
+
     initialize_stacks();
+    m_logger->add("Stack ok");
 
     // Setup fonts
     m_text.setFont(m_font_holder.get(Fonts::main));
     m_stack.pushState(States::Introduction);
+    m_logger->add("Static test setup ok");
 
-    m_logger->add("Ready Launch!");
+    m_logger->add("App Ready Launch!");
 }
 
 void Application::setup_logger() {
@@ -61,7 +67,6 @@ void Application::load_resources() {
     m_textures.load(Textures::ButtonPressed, "./assets/images/buttons/ButtonPressed.png");
     m_textures.load(Textures::ButtonSelected, "./assets/images/buttons/ButtonSelected.png");
 
-    m_logger->add("Resource loaded successfully");
 }
 
 void Application::initialize_stacks() {

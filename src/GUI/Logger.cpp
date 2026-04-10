@@ -6,7 +6,9 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
+#include <cstddef>
 #include <memory>
+#include <sstream>
 #include <string>
 
 namespace GUI {
@@ -22,14 +24,22 @@ namespace GUI {
     }
 
     void Logger::add(const std::string& log) {
-        Log::add(log);
-        
+
+        // Process Log: auto \n
+        const int MAX_LINE_CHARS = 40;
+        std::stringstream processed_log;
+        for(size_t i = 0; i < log.length(); i++) {
+            processed_log << log[i];
+            if(i > 0 && i % (MAX_LINE_CHARS - 1) == 0) processed_log << '\n';
+        }
+
+        Log::add(processed_log.str());
         static const float scale = 0.6f;
-        Label::Ptr label(std::make_shared<Label> (m_fonts, log));
+        Label::Ptr label(std::make_shared<Label> (m_fonts, processed_log.str()));
         label->setScale(scale, scale);
         label->setPosition(
-            0.f,
-            m_labels.size() * 30.f
+            10.f,
+            m_labels.size() * 40.f
         );
         m_labels.push_back(label);
     }

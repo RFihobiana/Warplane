@@ -1,4 +1,5 @@
 #include "states/MenuState.hpp"
+#include "GUI/Button.hpp"
 #include "GUI/Label.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "states/State.hpp"
@@ -69,9 +70,9 @@ void MenuState::draw() const {
         window.draw(shape);
     }
 
-    GUI::Label lab(*get_context().fonts, "go go go!");
-    lab.setPosition(window.getDefaultView().getSize() / 2.f);
-    window.draw(lab);
+    GUI::Button btn(*get_context().textures, *get_context().fonts, "Play");
+    btn.setPosition(window.getDefaultView().getSize() / 2.f);
+    window.draw(btn);
 }
 
 bool MenuState::handle_events(const sf::Event& event) {

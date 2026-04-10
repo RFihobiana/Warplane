@@ -6,6 +6,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
+#include <SFML/Window/Keyboard.hpp>
 #include <cstddef>
 #include <memory>
 #include <sstream>
@@ -15,7 +16,8 @@ namespace GUI {
     Logger::Logger(TextureHolder& textures, FontHolder& fonts)
     : m_textures(textures)
     , m_fonts(fonts)
-    , m_bg_rect(sf::Vector2f(500, 1024)) {
+    , m_bg_rect(sf::Vector2f(500, 1024))
+    , m_hide(false) {
         m_bg_rect.setFillColor(sf::Color(0, 0, 0, 64));
     }
 
@@ -44,7 +46,12 @@ namespace GUI {
         m_labels.push_back(label);
     }
 
-    void Logger::handle_events(const sf::Event& event) {}
+    void Logger::handle_events(const sf::Event& event) {
+        if(
+            event.type == sf::Event::KeyReleased
+            && event.key.code == sf::Keyboard::H
+        ) m_hide = !m_hide;
+    }
 
     void Logger::set_bg_size(const sf::Vector2f size) {
         m_bg_rect.setSize(size);
@@ -55,6 +62,8 @@ namespace GUI {
     }
 
     void Logger::draw(sf::RenderTarget& target, sf::RenderStates states) const {
+        if(m_hide) return;
+        
         states.transform *= getTransform();
 
         target.draw(m_bg_rect, states);

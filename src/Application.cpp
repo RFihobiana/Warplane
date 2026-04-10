@@ -106,6 +106,7 @@ void Application::process_events() {
 
         if( event.type == sf::Event::Closed) m_window.close();
         
+        m_logger->handle_events(event);
         m_stack.handle_events(event);
     }
 }

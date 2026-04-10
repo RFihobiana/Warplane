@@ -37,5 +37,6 @@ namespace GUI {
             const FontHolder&       m_fonts;
             std::vector<Label::Ptr> m_labels;
             sf::RectangleShape      m_bg_rect;
+            bool                    m_hide;
     };
 }

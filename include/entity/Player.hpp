@@ -15,6 +15,8 @@ class Player {
             MoveDown,
 
             ShowPosition,
+            
+            ActionCount,
         };
 
     public:

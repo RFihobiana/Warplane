@@ -1,6 +1,8 @@
 #include "states/SettingState.hpp"
 #include "GUI/Button.hpp"
+#include "GUI/Label.hpp"
 #include "states/State.hpp"
+#include "utilities.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/System/Time.hpp>
@@ -23,7 +25,9 @@ SettingState::SettingState(StateStack& stack, Context& ctx)
 
     // back btn
     GUI::Button::Ptr back(std::make_shared<GUI::Button>(*ctx.textures, *ctx.fonts, "Back"));
-    back->setPosition(0.f, 450.f);
+    back->setPosition(
+        m_button_binding[Player::ActionCount - 1]->getPosition() +
+        sf::Vector2f(0.f, 250.f));
     m_GUIContainer.pack(back);
 
     m_GUIContainer.setPosition(
@@ -37,7 +41,13 @@ void SettingState::add_button(const Player::Action action, const std::string& te
     GUI::Button::Ptr btn(std::make_shared<GUI::Button>(*ctx.textures, *ctx.fonts, text));
     btn->setPosition(0.f, y);
     btn->set_toggle(true);
-    m_GUIContainer.pack(btn);
+    m_button_binding[action] = btn;
+
+    GUI::Label::Ptr label(std::make_shared<GUI::Label>(*ctx.fonts, to_string(ctx.player->get_assigned_key(action))));
+    label->setPosition(150.f, y - 20);
+
+    m_GUIContainer.pack(m_button_binding[action]);
+    m_GUIContainer.pack(label);
 }
 
 void SettingState::draw() const {

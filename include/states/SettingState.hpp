@@ -2,6 +2,7 @@
 
 #include "GUI/Button.hpp"
 #include "GUI/Container.hpp"
+#include "GUI/Label.hpp"
 #include "states/State.hpp"
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/System/Time.hpp>
@@ -17,10 +18,12 @@ class SettingState: public State {
         virtual bool handle_events(const sf::Event& event);
 
     private:
-        void add_button(const Player::Action action, const std::string& text, const float y);
+        void add_button_label(const Player::Action action, const std::string& text, const float y);
+        void update_labels();
 
     private:
-        std::array<GUI::Button::Ptr, Player::ActionCount> m_button_binding;
+        std::array<GUI::Button::Ptr, Player::ActionCount>   m_button_binding;
+        std::array<GUI::Label::Ptr, Player::ActionCount>    m_label_binding;
         GUI::Container m_GUIContainer;
         sf::RectangleShape m_backgrounds;
 };

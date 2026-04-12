@@ -21,6 +21,12 @@ namespace GUI {
 
     void Label::handle_events(const sf::Event& event) {}
 
+    std::string Label::get_text() const { return m_text.getString(); }
+
+    void Label::set_text(const std::string& txt) {
+        m_text.setString(txt);
+    }
+
     void Label::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         states.transform *= getTransform();
         target.draw(m_text, states);

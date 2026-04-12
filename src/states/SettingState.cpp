@@ -3,6 +3,7 @@
 #include "GUI/Label.hpp"
 #include "entity/Player.hpp"
 #include "states/State.hpp"
+#include "states/StateIdentification.hpp"
 #include "utilities.hpp"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -31,7 +32,10 @@ SettingState::SettingState(StateStack& stack, Context& ctx)
     back->setPosition(
         m_button_binding[Player::ActionCount - 1]->getPosition() +
         sf::Vector2f(0.f, 250.f));
-    back->set_callback([this]() { request_pop(); });
+    back->set_callback([this]() { 
+        request_pop();
+        request_push(States::MainMenu);
+    });
     m_GUIContainer.pack(back);
 
     m_GUIContainer.setPosition(

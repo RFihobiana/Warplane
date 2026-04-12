@@ -9,6 +9,7 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
+#include <SFML/Window/Keyboard.hpp>
 #include <cstddef>
 #include <memory>
 #include <string>
@@ -70,11 +71,24 @@ void SettingState::draw() const {
     window.draw(m_GUIContainer);
 }
 
-bool SettingState::update(sf::Time& dt) {
-    update_labels();
-    return true;
-}
+bool SettingState::update(sf::Time& dt) { return true; }
 
 bool SettingState::handle_events(const sf::Event& event) {
-    return true;
+    bool is_key_binding = false;
+
+    for(size_t action = 0; action < Player::ActionCount; action++) {
+        if(m_button_binding[action]->is_active()) {
+            is_key_binding = true;
+            if(event.type == sf::Event::KeyReleased) {
+                get_context().player->assign_key(event.key.code, static_cast<Player::Action>(action));
+                m_button_binding[action]->deactivate();
+            }
+            break;
+        }
+    }
+
+    if(is_key_binding) {
+        update_labels();
+    } else m_GUIContainer.handle_events(event);
+    return false;
 }

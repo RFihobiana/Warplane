@@ -6,6 +6,7 @@
 #include "states/LoadingState.hpp"
 #include "states/MenuState.hpp"
 #include "states/PauseState.hpp"
+#include "states/SettingState.hpp"
 #include "states/State.hpp"
 #include "states/StateIdentification.hpp"
 #include <SFML/Graphics/Color.hpp>
@@ -40,9 +41,9 @@ Application::Application()
 
     // Setup fonts
     m_text.setFont(m_font_holder.get(Fonts::main));
-    m_stack.pushState(States::Introduction);
     m_logger->add("Static test setup ok");
 
+    m_stack.pushState(States::Setting);
     m_logger->add("App Ready Launch!");
 }
 
@@ -77,6 +78,7 @@ void Application::initialize_stacks() {
     m_stack.register_state<MenuState>(States::MainMenu);
     m_stack.register_state<PauseState>(States::Pause);
     m_stack.register_state<LoadingState>(States::Loading);
+    m_stack.register_state<SettingState>(States::Setting);
 }
 
 void Application::run() {

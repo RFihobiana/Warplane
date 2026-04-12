@@ -41,12 +41,19 @@ void MenuState::setup_options() {
         request_pop();
         request_push(States::Loading);
     });
-
     m_container.pack(start);
+
+    GUI::Button::Ptr setting = std::make_shared<GUI::Button>(textures, fonts, "Settings");    
+    setting->setPosition(start->getPosition() + sf::Vector2f(0.f, SPACE_BETWEEN));
+    setting->set_callback([this]() {
+        request_pop();
+        request_push(States::Setting);
+    });
+    m_container.pack(setting);
+
     
     GUI::Button::Ptr quit = std::make_shared<GUI::Button>(textures, fonts, "Quit");
-    quit->setPosition(start->getPosition() + sf::Vector2f(0.f, SPACE_BETWEEN));
-    quit->set_toggle(true);
+    quit->setPosition(setting->getPosition() + sf::Vector2f(0.f, SPACE_BETWEEN));
 
     quit->set_callback([this]() {
         request_pop();

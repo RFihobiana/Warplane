@@ -29,6 +29,7 @@ sources = files(
     'src/states/PauseState.cpp',
     'src/states/ParallelTask.cpp',
     'src/states/LoadingState.cpp',
+    'src/states/SettingState.cpp',
 
     'src/GUI/Component.cpp',
     'src/GUI/Label.cpp',

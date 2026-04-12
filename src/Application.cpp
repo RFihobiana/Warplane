@@ -43,7 +43,7 @@ Application::Application()
     m_text.setFont(m_font_holder.get(Fonts::main));
     m_logger->add("Static test setup ok");
 
-    m_stack.pushState(States::Setting);
+    m_stack.pushState(States::Introduction);
     m_logger->add("App Ready Launch!");
 }
 

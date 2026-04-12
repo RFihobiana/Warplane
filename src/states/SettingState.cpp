@@ -31,6 +31,7 @@ SettingState::SettingState(StateStack& stack, Context& ctx)
     back->setPosition(
         m_button_binding[Player::ActionCount - 1]->getPosition() +
         sf::Vector2f(0.f, 250.f));
+    back->set_callback([this]() { request_pop(); });
     m_GUIContainer.pack(back);
 
     m_GUIContainer.setPosition(

@@ -9,6 +9,7 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <algorithm>
+#include <ranges>
 #include <iostream>
 #include <utility>
 
@@ -66,6 +67,10 @@ void Player::handle_realtime_event(CommandQueue& commands) {
 }
 
 void Player::assign_key(const sf::Keyboard::Key& key, const Action& action) {
+    for(auto iter = m_key_binding.begin(); iter != m_key_binding.end();) {
+        if(iter->second == action) m_key_binding.erase(iter++);
+        else iter++;
+    }
     m_key_binding[key] = action;
 }
 

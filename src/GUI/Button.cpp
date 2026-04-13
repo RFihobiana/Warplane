@@ -49,7 +49,7 @@ namespace GUI {
     void Button::deactivate() {
         Component::deactivate();
         if(m_is_toggled) {
-            if(is_selected()) m_sprite.setTexture(m_pressed_texture);
+            if(is_selected()) m_sprite.setTexture(m_selected_texture);
             else m_sprite.setTexture(m_normal_texture);
         }
     }

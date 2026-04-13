@@ -21,10 +21,10 @@ SettingState::SettingState(StateStack& stack, Context& ctx)
     m_backgrounds.setFillColor(sf::Color(0x8e, 0x7e, 0x7e));
 
     // Buttons
-    add_button_label(Player::MoveLeft, "Move Left", 0.f);
-    add_button_label(Player::MoveRight, "Move Right", 50.f);
-    add_button_label(Player::MoveUp, "Move Up", 100.f);
-    add_button_label(Player::MoveDown, "Move Down", 150.f);
+    add_button_label(Player::MoveUp, "Move Up", 0.f);
+    add_button_label(Player::MoveDown, "Move Down", 50.f);
+    add_button_label(Player::MoveRight, "Move Right", 100.f);
+    add_button_label(Player::MoveLeft, "Move Left", 150.f);
     add_button_label(Player::ShowPosition, "Player Pos", 200.f);
 
     // back btn

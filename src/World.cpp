@@ -42,6 +42,7 @@ void World::load_resources() {
     if(!m_textures.has(Textures::Eagle)) m_textures.load(Textures::Eagle, "./assets/images/Eagle.png");
     if(!m_textures.has(Textures::Raptor)) m_textures.load(Textures::Raptor, "./assets/images/Raptor.png");
     if(!m_textures.has(Textures::Landscape)) m_textures.load(Textures::Landscape, "./assets/images/Desert.png");
+    if(!m_textures.has(Textures::Avenger)) m_textures.load(Textures::Avenger, "./assets/images/Avenger.png");
 }
 
 void World::build() {

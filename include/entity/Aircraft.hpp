@@ -11,6 +11,8 @@ class Aircraft: public Entity {
         enum Type {
             Eagle,
             Raptor,
+            Avenger,
+            TypeCount,
         };
     
     public:

@@ -1,5 +1,7 @@
 #include "entity/Aircraft.hpp"
 #include "command/Category.hpp"
+#include "entity/DataTable.hpp"
+#include "entity/Entity.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "utilities.hpp"
 #include <SFML/Graphics/RenderStates.hpp>
@@ -7,20 +9,14 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <cassert>
+#include <vector>
 
-Textures::ID get_texture_id(const Aircraft::Type type) {
-    switch (type) {
-        case Aircraft::Eagle: return Textures::Eagle;
-        case Aircraft::Raptor: return Textures::Raptor;
-    }
-
-    assert(false);
-}
+namespace { const std::vector<AircraftData> Table = initializeAircarftData(); }
 
 Aircraft::Aircraft(const Aircraft::Type type, const TextureHolder& textures)
-: m_type(type) {
-    const auto texture_id = get_texture_id(type);
-    m_sprite.setTexture(textures.get(texture_id));
+: Entity(Table[type].hp)
+, m_type(type) {
+    m_sprite.setTexture(textures.get(Table[type].texture_id));
     center_origin(m_sprite);
 }
 

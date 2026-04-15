@@ -8,6 +8,7 @@ namespace Textures {
         Landscape,
         Eagle,
         Raptor,
+        Avenger,
 
         // Buttons
         ButtonNormal,

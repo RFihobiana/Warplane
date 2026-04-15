@@ -13,6 +13,7 @@ sources = files(
     'src/entity/Entity.cpp',
     'src/entity/Aircraft.cpp',
     'src/entity/SpriteNode.cpp',
+    'src/entity/DataTable.cpp',
 
     'src/World.cpp',
 

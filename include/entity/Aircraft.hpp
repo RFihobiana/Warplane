@@ -7,6 +7,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Time.hpp>
+#include <cstddef>
 class Aircraft: public Entity {
     public:
         enum Type {
@@ -23,10 +24,15 @@ class Aircraft: public Entity {
     
     private:
         virtual void draw_current(sf::RenderTarget& target, sf::RenderStates states) const;
+        
         virtual void update_current(sf::Time& dt);
+        void update_movement_pattern(sf::Time& dt);
     
     private:
         Type m_type;
         sf::Sprite m_sprite;
         TextNode* m_health_display;
+
+        float m_travelled_distance;
+        size_t m_direction_index;
 };

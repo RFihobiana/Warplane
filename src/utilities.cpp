@@ -1,6 +1,8 @@
 #include "utilities.hpp"
 #include <SFML/Window/Keyboard.hpp>
+#include <numbers>
 #include <string>
+
 
 std::string to_string(const sf::Keyboard::Key key) {
     #define KEY_TO_STRING(KEY)  \
@@ -115,3 +117,9 @@ std::string to_string(const sf::Keyboard::Key key) {
     }
         
 }
+
+float to_radian(const float degree) { return degree * std::numbers::pi / 180.f;
+}
+
+float to_degree(const float radian) { return radian * 180.f / std::numbers::pi; }
+

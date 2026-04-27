@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Entity.hpp"
+#include "TextNode.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -22,8 +23,10 @@ class Aircraft: public Entity {
     
     private:
         virtual void draw_current(sf::RenderTarget& target, sf::RenderStates states) const;
+        virtual void update_current(sf::Time& dt);
     
     private:
         Type m_type;
         sf::Sprite m_sprite;
+        TextNode* m_health_display;
 };

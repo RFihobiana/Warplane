@@ -2,10 +2,10 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 
-Entity::Entity(const float hitpoints)
+Entity::Entity(const long long int hitpoints)
 : m_hitpoints(hitpoints) {}
 
-void Entity::damage(const float hp) {
+void Entity::damage(const long long int hp) {
     m_hitpoints -= hp;
 }
 
@@ -13,11 +13,11 @@ void Entity::destroy() {
     m_hitpoints = 0.f;
 }
 
-void Entity::repair(const float hp) {
+void Entity::repair(const long long int hp) {
     m_hitpoints += hp;
 }
 
-float Entity::get_hitpoints() const {
+long long int Entity::get_hitpoints() const {
     return m_hitpoints;
 }
 

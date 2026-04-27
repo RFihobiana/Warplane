@@ -6,12 +6,12 @@
 
 class Entity: public SceneNode {
     public:
-        explicit Entity(const float hitpoints);
-        void damage(const float points);
-        void repair(const float points);
+        explicit Entity(const long long int hitpoints);
+        void damage(const long long int points);
+        void repair(const long long int points);
         void destroy();
 
-        float get_hitpoints() const;
+        long long int get_hitpoints() const;
         bool is_destroyed() const;
 
         void set_velocity(const sf::Vector2f& velocity);

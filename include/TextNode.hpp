@@ -11,7 +11,7 @@ class TextNode: public SceneNode {
     public:
         TextNode(const FontHolder& fonts, const std::string& value);
 
-        void center_origin();
+        void set_string(const std::string& value);
     
     private:
         virtual void draw_current(sf::RenderTarget& target, sf::RenderStates states) const;

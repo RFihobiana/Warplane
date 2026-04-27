@@ -17,7 +17,7 @@
 
 GameState::GameState(StateStack& stack, Context& ctx)
 : State(stack, ctx)
-, m_world(*ctx.window, *ctx.textures) {
+, m_world(*ctx.window, *ctx.textures, *ctx.fonts) {
     load_resources();
 }
 

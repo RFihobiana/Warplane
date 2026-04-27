@@ -1,7 +1,7 @@
 #include "states/ParallelTask.hpp"
 #include <SFML/System/Lock.hpp>
 
-const float TASK_DURATION = 6.5f;
+const float TASK_DURATION = 0.4f;
 
 ParallelTask::ParallelTask()
 : m_thread(&ParallelTask::run_task, this)

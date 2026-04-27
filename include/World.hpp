@@ -14,7 +14,7 @@
 
 class World: public sf::NonCopyable {
     public:
-        World(sf::RenderWindow& window, TextureHolder& textures);
+        World(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts);
 
         void update(sf::Time& dt);
         void draw() const;
@@ -41,6 +41,7 @@ class World: public sf::NonCopyable {
     private:
         sf::RenderWindow&   m_window;
         TextureHolder&      m_textures;
+        FontHolder&         m_fonts;
         
         sf::View        m_view;
         sf::FloatRect   m_world_bound;

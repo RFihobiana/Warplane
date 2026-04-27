@@ -4,8 +4,8 @@
 #include <vector>
 
 struct AircraftData {
-    float hp;
-    float speed;
+    long long int hp;
+    long long int speed;
     Textures::ID texture_id;
 };
 

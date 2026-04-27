@@ -16,7 +16,7 @@ class Aircraft: public Entity {
         };
     
     public:
-        explicit Aircraft(const Type type, const TextureHolder& textures);
+        explicit Aircraft(const Type type, const TextureHolder& textures, const FontHolder& fonts);
 
         virtual unsigned int get_category() const;
     

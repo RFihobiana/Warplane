@@ -1,4 +1,5 @@
 #include "entity/Aircraft.hpp"
+#include "TextNode.hpp"
 #include "command/Category.hpp"
 #include "entity/DataTable.hpp"
 #include "entity/Entity.hpp"
@@ -9,15 +10,24 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <cassert>
+#include <memory>
+#include <string>
+#include <utility>
 #include <vector>
 
 namespace { const std::vector<AircraftData> Table = initializeAircarftData(); }
 
-Aircraft::Aircraft(const Aircraft::Type type, const TextureHolder& textures)
+Aircraft::Aircraft(const Aircraft::Type type, const TextureHolder& textures, const FontHolder& fonts)
 : Entity(Table[type].hp)
 , m_type(type) {
     m_sprite.setTexture(textures.get(Table[type].texture_id));
     center_origin(m_sprite);
+    
+    // health
+    std::unique_ptr<TextNode> health_node(new TextNode(fonts, std::to_string(Table[type].hp)));
+    health_node->center_origin();
+    health_node->move(0.f, 40.f);
+    attach_child(std::move(health_node));
 }
 
 void Aircraft::draw_current(sf::RenderTarget& target, sf::RenderStates states) const {

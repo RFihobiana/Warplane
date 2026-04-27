@@ -9,6 +9,7 @@ sources = files(
     'src/Application.cpp',
     'src/utilities.cpp',
     'src/SceneNode.cpp',
+    'src/TextNode.cpp',
 
     'src/entity/Entity.cpp',
     'src/entity/Aircraft.cpp',

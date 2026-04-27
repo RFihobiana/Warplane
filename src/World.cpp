@@ -16,9 +16,10 @@
 #include <memory>
 #include <utility>
 
-World::World(sf::RenderWindow& window, TextureHolder& textures)
+World::World(sf::RenderWindow& window, TextureHolder& textures, FontHolder& fonts)
 : m_window(window)
 , m_textures(textures)
+, m_fonts(fonts)
 
 , m_view(window.getDefaultView())
 , m_world_bound(
@@ -71,19 +72,19 @@ void World::build() {
     m_layers[Background]->attach_child(std::move(background));
 
     // Create Aircraft
-    std::unique_ptr<Aircraft> aircraft(new Aircraft(Aircraft::Eagle, m_textures));
+    std::unique_ptr<Aircraft> aircraft(new Aircraft(Aircraft::Eagle, m_textures, m_fonts));
     aircraft->setPosition(m_spawn_player);
     aircraft->set_velocity(m_scroll_speed);
     m_player = aircraft.get();
     m_layers[Air]->attach_child(std::move(aircraft));
     
     // Player escort
-    std::unique_ptr<Aircraft> left_escort(new Aircraft(Aircraft::Raptor, m_textures));
-    left_escort->setPosition(-60.f, 80.f);
+    std::unique_ptr<Aircraft> left_escort(new Aircraft(Aircraft::Raptor, m_textures, m_fonts));
+    left_escort->setPosition(-90.f, 80.f);
     m_player->attach_child(std::move(left_escort));
 
-    std::unique_ptr<Aircraft> right_escort(new Aircraft(Aircraft::Raptor, m_textures));
-    right_escort->setPosition(60.f, 80.f);
+    std::unique_ptr<Aircraft> right_escort(new Aircraft(Aircraft::Raptor, m_textures, m_fonts));
+    right_escort->setPosition(90.f, 80.f);
     m_player->attach_child(std::move(right_escort));
 }
 

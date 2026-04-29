@@ -13,21 +13,21 @@ std::vector<AircraftData> initializeAircarftData() {
     data[Aircraft::Eagle].speed = 400;
     data[Aircraft::Eagle].texture_id = Textures::Eagle;
     
-    data[Aircraft::Raptor].hp = 100;
-    data[Aircraft::Raptor].speed = 150;
+    data[Aircraft::Raptor].hp = 10;
+    data[Aircraft::Raptor].speed = 100;
     data[Aircraft::Raptor].texture_id = Textures::Raptor;
     data[Aircraft::Raptor].directions.push_back(Direction(45.f, 80));
     data[Aircraft::Raptor].directions.push_back(Direction(-45.f, 80 * 2));
     data[Aircraft::Raptor].directions.push_back(Direction(45.f, 80));
     
-    data[Aircraft::Avenger].hp = 100;
-    data[Aircraft::Avenger].speed = 100;
+    data[Aircraft::Avenger].hp = 40;
+    data[Aircraft::Avenger].speed = 30;
     data[Aircraft::Avenger].texture_id = Textures::Avenger;
-    data[Aircraft::Avenger].directions.push_back(Direction(45.f, 50.f));
-    data[Aircraft::Avenger].directions.push_back(Direction(0.f, 50.f));
-    data[Aircraft::Avenger].directions.push_back(Direction(-45.f, 50.f * 2));
-    data[Aircraft::Avenger].directions.push_back(Direction(0.f, 50.f));
-    data[Aircraft::Avenger].directions.push_back(Direction(45.f, 50.f));
+    data[Aircraft::Avenger].directions.push_back(Direction(45.f, 60.f));
+    data[Aircraft::Avenger].directions.push_back(Direction(0.f, 60.f));
+    data[Aircraft::Avenger].directions.push_back(Direction(-45.f, 60.f * 2));
+    data[Aircraft::Avenger].directions.push_back(Direction(0.f, 60.f));
+    data[Aircraft::Avenger].directions.push_back(Direction(45.f, 60.f));
 
     return data;
 }

@@ -28,7 +28,7 @@ Aircraft::Aircraft(const Aircraft::Type type, const TextureHolder& textures, con
     
     // health
     std::unique_ptr<TextNode> health_node(new TextNode(fonts, std::to_string(Table[type].hp)));
-    health_node->setPosition(0.f, 40.f);
+    health_node->setPosition(0.f, 50.f);
     m_health_display = health_node.get();
     attach_child(std::move(health_node));
 }
@@ -41,6 +41,8 @@ void Aircraft::update_current(sf::Time& dt) {
     Entity::update_current(dt);
     m_health_display->set_string(std::to_string(get_hitpoints()) + " HP");
     m_health_display->setRotation(-getRotation());
+
+    update_movement_pattern(dt);
 }
 
 void Aircraft::update_movement_pattern(sf::Time& dt) {

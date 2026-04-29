@@ -11,6 +11,7 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 #include <array>
+#include <vector>
 
 class World: public sf::NonCopyable {
     public:
@@ -31,11 +32,27 @@ class World: public sf::NonCopyable {
         /* Build world's entities */
         void build();
 
+        sf::FloatRect get_battlefield_bounds() const;
+        void spawn_enemies();
+        void add_enemy(const Aircraft::Type type, float relx, float rely);
+        void add_enemies();
+
     private:
         enum Layer {
             Background,
             Air,
             LayerCount
+        };
+
+        struct SpawnPoint {
+            SpawnPoint(const Aircraft::Type type, const float x, const float y)
+            : type(type)
+            , x(x)
+            , y(y) {}
+
+            Aircraft::Type type;
+            float x;
+            float y;
         };
 
     private:
@@ -52,6 +69,7 @@ class World: public sf::NonCopyable {
 
         Aircraft*                           m_player;
         sf::Vector2f        m_spawn_player;
+        std::vector<SpawnPoint> m_enemy_spawn_points;
 
         CommandQueue m_command_queue;
 

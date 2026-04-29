@@ -26,9 +26,9 @@ World::World(sf::RenderWindow& window, TextureHolder& textures, FontHolder& font
     0.f,
     0.f,
     m_view.getSize().x,
-    50000.f
+    4000.f
 )
-, m_scroll_speed(0.f, -100.f)
+, m_scroll_speed(0.f, -80.f)
 , m_spawn_player(
     m_world_bound.left + m_world_bound.width / 2,
     m_world_bound.top + m_world_bound.height - m_view.getSize().y / 2
@@ -44,6 +44,72 @@ void World::load_resources() {
     if(!m_textures.has(Textures::Raptor)) m_textures.load(Textures::Raptor, "./assets/images/Raptor.png");
     if(!m_textures.has(Textures::Landscape)) m_textures.load(Textures::Landscape, "./assets/images/Desert.png");
     if(!m_textures.has(Textures::Avenger)) m_textures.load(Textures::Avenger, "./assets/images/Avenger.png");
+}
+
+sf::FloatRect World::get_battlefield_bounds() const {
+    const sf::Vector2f& view_center = m_view.getCenter();
+    const sf::Vector2f& view_size = m_view.getSize();
+    const sf::Vector2f margin(view_size * 0.2f);
+    
+    auto bound = sf::FloatRect(
+        view_center - (view_size / 2.f),
+        view_size
+    );
+    bound.top -= margin.y;
+    bound.left -= margin.x;
+    return bound;
+
+}
+
+void World::spawn_enemies() {
+    const sf::FloatRect battlefield_bounds = get_battlefield_bounds();
+    while(
+        !m_enemy_spawn_points.empty()
+        && m_enemy_spawn_points.back().y > battlefield_bounds.top
+    ) {
+        SpawnPoint spawn(m_enemy_spawn_points.back());
+
+        Aircraft::Ptr enemy(new Aircraft(spawn.type, m_textures, m_fonts));
+        enemy->setRotation(180.f);
+        enemy->setPosition(spawn.x, spawn.y);
+        m_layers[Air]->attach_child(std::move(enemy));
+
+        m_enemy_spawn_points.pop_back();
+    }
+}
+
+void World::add_enemy(const Aircraft::Type type, float relx, float rely) {
+    m_enemy_spawn_points.push_back(SpawnPoint(
+        type,
+        m_spawn_player.x + relx,
+        m_spawn_player.y - rely
+    ));
+}
+
+void World::add_enemies() {
+    add_enemy(Aircraft::Raptor, 0.f, 500.f);
+
+    add_enemy(Aircraft::Raptor, -80.f, 1200.f);
+    add_enemy(Aircraft::Raptor, 80.f, 1200.f);
+
+    add_enemy(Aircraft::Avenger, 200.f, 1800.f);
+    add_enemy(Aircraft::Avenger, 0.f, 1800.f);
+    add_enemy(Aircraft::Avenger, -200.f, 1800.f);
+
+    add_enemy(Aircraft::Avenger, 300.f, 2500.f);
+    add_enemy(Aircraft::Avenger, 100.f, 2500.f);
+    add_enemy(Aircraft::Avenger, -100.f, 2500.f);
+    add_enemy(Aircraft::Avenger, -300.f, 2500.f);
+
+    add_enemy(Aircraft::Raptor, -80.f, 3100.f);
+    add_enemy(Aircraft::Raptor, 80.f, 3100.f);
+    add_enemy(Aircraft::Avenger, 200.f, 3200.f);
+    add_enemy(Aircraft::Avenger, 0.f, 3200.f);
+    add_enemy(Aircraft::Avenger, -200.f, 3200.f);
+
+    std::ranges::sort(m_enemy_spawn_points, [](const auto& a, const auto& b) {
+        return a.y - b.y;
+    });
 }
 
 void World::build() {
@@ -78,19 +144,14 @@ void World::build() {
     m_player = aircraft.get();
     m_layers[Air]->attach_child(std::move(aircraft));
     
-    // Player escort
-    std::unique_ptr<Aircraft> left_escort(new Aircraft(Aircraft::Raptor, m_textures, m_fonts));
-    left_escort->setPosition(-90.f, 80.f);
-    m_player->attach_child(std::move(left_escort));
-
-    std::unique_ptr<Aircraft> right_escort(new Aircraft(Aircraft::Raptor, m_textures, m_fonts));
-    right_escort->setPosition(90.f, 80.f);
-    m_player->attach_child(std::move(right_escort));
+    add_enemies();
 }
 
 void World::update(sf::Time& dt) {
     m_view.move(m_scroll_speed * dt.asSeconds());
     m_player->set_velocity(0.f, 0.f);
+
+    spawn_enemies();
 
     // Propagate commands
     while(!m_command_queue.is_empty()) {

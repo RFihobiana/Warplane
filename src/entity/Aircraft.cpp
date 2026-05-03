@@ -16,7 +16,7 @@
 #include <utility>
 #include <vector>
 
-namespace { const std::vector<AircraftData> Table = initializeAircarftData(); }
+namespace { const std::vector<AircraftData> Table = initialize_aircarft_data(); }
 
 Aircraft::Aircraft(const Aircraft::Type type, const TextureHolder& textures, const FontHolder& fonts)
 : Entity(Table[type].hp)

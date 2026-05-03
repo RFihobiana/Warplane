@@ -17,5 +17,12 @@ struct AircraftData {
     std::vector<Direction>  directions;
 };
 
+struct ProjectileData {
+    float           damage;
+    long long int   speed;
+    Textures::ID    texture_id;
+};
 
-std::vector<AircraftData> initializeAircarftData();
+
+std::vector<AircraftData> initialize_aircarft_data();
+std::vector<ProjectileData> initialize_projectile_data();

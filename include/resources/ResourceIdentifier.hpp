@@ -5,10 +5,22 @@
 #include <SFML/Graphics/Texture.hpp>
 namespace Textures {
     enum ID {
+
         Landscape,
+
+        // Aircraft
         Eagle,
         Raptor,
         Avenger,
+
+        // Guns
+        Bullet,
+        Missile,
+
+        // Pickup
+        FireRate,
+        HealthRefill,
+        MissileRefill,
 
         // Buttons
         ButtonNormal,

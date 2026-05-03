@@ -1,12 +1,13 @@
 #include "entity/DataTable.hpp"
 #include "entity/Aircraft.hpp"
+#include "entity/Projectile.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include <vector>
 
 Direction::Direction(const float angle, const float distance)
     : angle(angle), distance(distance) {}
 
-std::vector<AircraftData> initializeAircarftData() {
+std::vector<AircraftData> initialize_aircarft_data() {
     std::vector<AircraftData> data(Aircraft::TypeCount);
 
     data[Aircraft::Eagle].hp = 100;
@@ -28,6 +29,24 @@ std::vector<AircraftData> initializeAircarftData() {
     data[Aircraft::Avenger].directions.push_back(Direction(-45.f, 60.f * 2));
     data[Aircraft::Avenger].directions.push_back(Direction(0.f, 60.f));
     data[Aircraft::Avenger].directions.push_back(Direction(45.f, 60.f));
+
+    return data;
+}
+
+std::vector<ProjectileData> initialize_projectile_data() {
+    std::vector<ProjectileData> data(Projectile::TypeCount);
+    
+    data[Projectile::AlliedBullet].damage = 10.f;
+    data[Projectile::AlliedBullet].speed = 300;
+    data[Projectile::AlliedBullet].texture_id = Textures::Bullet;
+    
+    data[Projectile::EnemyBullet].damage = 10.f;
+    data[Projectile::EnemyBullet].speed = 300;
+    data[Projectile::EnemyBullet].texture_id = Textures::Bullet;
+
+    data[Projectile::Missile].damage = 200.f;
+    data[Projectile::Missile].speed = 150;
+    data[Projectile::Missile].texture_id = Textures::Missile;
 
     return data;
 }

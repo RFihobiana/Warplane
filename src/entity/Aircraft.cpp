@@ -3,6 +3,7 @@
 #include "command/Category.hpp"
 #include "entity/DataTable.hpp"
 #include "entity/Entity.hpp"
+#include "entity/Projectile.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "utilities.hpp"
 #include <SFML/Graphics/RenderStates.hpp>
@@ -11,6 +12,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <cassert>
 #include <cmath>
+#include <iostream>
 #include <memory>
 #include <string>
 #include <utility>
@@ -21,6 +23,7 @@ namespace { const std::vector<AircraftData> Table = initialize_aircarft_data(); 
 Aircraft::Aircraft(const Aircraft::Type type, const TextureHolder& textures, const FontHolder& fonts)
 : Entity(Table[type].hp)
 , m_type(type)
+, m_textures(textures)
 , m_travelled_distance(0.f)
 , m_direction_index(0) {
     m_sprite.setTexture(textures.get(Table[type].texture_id));
@@ -32,6 +35,16 @@ Aircraft::Aircraft(const Aircraft::Type type, const TextureHolder& textures, con
     m_health_display = health_node.get();
     attach_child(std::move(health_node));
 }
+
+void Aircraft::fire() {
+    std::unique_ptr<Projectile> bullet(new Projectile(
+        get_category() == Category::EnemyAircraft? Projectile::EnemyBullet : Projectile::AlliedBullet,
+        m_textures
+    ));
+
+    attach_child(std::move(bullet));
+}
+void Aircraft::launch_missile() {}
 
 void Aircraft::draw_current(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(m_sprite, states);

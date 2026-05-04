@@ -20,6 +20,9 @@ class Aircraft: public Entity {
     public:
         explicit Aircraft(const Type type, const TextureHolder& textures, const FontHolder& fonts);
 
+        void fire();
+        void launch_missile();
+
         virtual unsigned int get_category() const;
     
     private:
@@ -30,6 +33,7 @@ class Aircraft: public Entity {
     
     private:
         Type m_type;
+        const TextureHolder& m_textures;
         sf::Sprite m_sprite;
         TextNode* m_health_display;
 

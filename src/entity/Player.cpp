@@ -9,6 +9,7 @@
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <algorithm>
+#include <functional>
 #include <ranges>
 #include <iostream>
 #include <utility>
@@ -31,11 +32,14 @@ Player::Player() {
     m_key_binding[sf::Keyboard::A] = MoveLeft;
     m_key_binding[sf::Keyboard::D] = MoveRight;
     m_key_binding[sf::Keyboard::P] = ShowPosition;
+    m_key_binding[sf::Keyboard::Space]  = Fire;
+    m_key_binding[sf::Keyboard::M] = LaunchMissile;
 
     m_action_binding[MoveLeft].action = derivated<Aircraft>(AircraftMover(-player_speed, 0.f));
     m_action_binding[MoveRight].action = derivated<Aircraft>(AircraftMover(player_speed, 0.f));
     m_action_binding[MoveUp].action = derivated<Aircraft>(AircraftMover(0.f, -player_speed));
     m_action_binding[MoveDown].action = derivated<Aircraft>(AircraftMover(0.f, player_speed * 1.25f));
+    
     m_action_binding[ShowPosition].action = derivated<Aircraft>([](Aircraft& aircraft, sf::Time&) {
         const sf::Vector2f pos = aircraft.getPosition();
         std::cout
@@ -44,6 +48,8 @@ Player::Player() {
             << ")"
             << std::endl;
     });
+
+    m_action_binding[Fire].action = derivated<Aircraft>(std::bind(&Aircraft::fire, std::placeholders::_1));
 
     for(auto& pair: m_action_binding) pair.second.category = Category::PlayerAircraft;
 }

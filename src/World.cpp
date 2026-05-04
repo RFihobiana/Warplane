@@ -39,11 +39,20 @@ World::World(sf::RenderWindow& window, TextureHolder& textures, FontHolder& font
 }
 
 void World::load_resources() {
-    // Textures
+    /* TEXTURES */
+
+    // Aircraft
+
     if(!m_textures.has(Textures::Eagle)) m_textures.load(Textures::Eagle, "./assets/images/Eagle.png");
     if(!m_textures.has(Textures::Raptor)) m_textures.load(Textures::Raptor, "./assets/images/Raptor.png");
-    if(!m_textures.has(Textures::Landscape)) m_textures.load(Textures::Landscape, "./assets/images/Desert.png");
     if(!m_textures.has(Textures::Avenger)) m_textures.load(Textures::Avenger, "./assets/images/Avenger.png");
+
+    // Buns
+    if(!m_textures.has(Textures::Bullet)) m_textures.load(Textures::Bullet, "./assets/images/guns/Bullet.png");
+    if(!m_textures.has(Textures::Missile)) m_textures.load(Textures::Missile, "./assets/images/guns/Missile.png");
+
+    // Background
+    if(!m_textures.has(Textures::Landscape)) m_textures.load(Textures::Landscape, "./assets/images/Desert.png");
 }
 
 sf::FloatRect World::get_battlefield_bounds() const {

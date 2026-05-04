@@ -15,6 +15,9 @@ class Player {
             MoveDown,
 
             ShowPosition,
+
+            Fire,
+            LaunchMissile,
             
             ActionCount,
         };

@@ -38,8 +38,8 @@ long long int Projectile::get_max_speed() const { return Table[m_type].speed; }
 
 float Projectile::get_damage() const { return Table[m_type].damage; }
 
-void Projectile::update_current(sf::Time& dt, CommandQueue& command_queue) {
-    Entity::update_current(dt);
+void Projectile::update_current(sf::Time& dt, CommandQueue& commands) {
+    Entity::update_current(dt, commands);
 }
 
 void Projectile::draw_current(sf::RenderTarget& target, sf::RenderStates states) const {

@@ -1,6 +1,7 @@
 #include "entity/Aircraft.hpp"
 #include "TextNode.hpp"
 #include "command/Category.hpp"
+#include "command/CommandQueue.hpp"
 #include "entity/DataTable.hpp"
 #include "entity/Entity.hpp"
 #include "entity/Projectile.hpp"
@@ -50,8 +51,8 @@ void Aircraft::draw_current(sf::RenderTarget& target, sf::RenderStates states) c
     target.draw(m_sprite, states);
 }
 
-void Aircraft::update_current(sf::Time& dt) {
-    Entity::update_current(dt);
+void Aircraft::update_current(sf::Time& dt, CommandQueue& commands) {
+    Entity::update_current(dt, commands);
     m_health_display->set_string(std::to_string(get_hitpoints()) + " HP");
     m_health_display->setRotation(-getRotation());
 

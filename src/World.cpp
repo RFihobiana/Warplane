@@ -171,7 +171,7 @@ void World::update(sf::Time& dt) {
     if(velocity.x != 0 && velocity.y != 0) m_player->set_velocity(velocity / std::sqrt(2.f));
     m_player->accelerate(0.f, m_scroll_speed.y);
     
-    m_graph.update(dt);
+    m_graph.update(dt, m_command_queue);
 
     // Don't allow player aircraft leave the view
     sf::FloatRect view_bound {

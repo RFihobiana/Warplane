@@ -1,4 +1,5 @@
 #include "entity/Entity.hpp"
+#include "command/CommandQueue.hpp"
 #include <SFML/System/Time.hpp>
 #include <SFML/System/Vector2.hpp>
 
@@ -45,6 +46,6 @@ void Entity::accelerate(const float& ax, const float& ay) {
 
 sf::Vector2f Entity::get_velocity() const { return m_velocity; }
 
-void Entity::update_current(sf::Time& dt) {
+void Entity::update_current(sf::Time& dt, CommandQueue& commands) {
     move(m_velocity * dt.asSeconds());
 }

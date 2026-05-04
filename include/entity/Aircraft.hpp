@@ -2,6 +2,7 @@
 
 #include "Entity.hpp"
 #include "TextNode.hpp"
+#include "command/CommandQueue.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -28,7 +29,7 @@ class Aircraft: public Entity {
     private:
         virtual void draw_current(sf::RenderTarget& target, sf::RenderStates states) const;
         
-        virtual void update_current(sf::Time& dt);
+        virtual void update_current(sf::Time& dt, CommandQueue& commands);
         void update_movement_pattern(sf::Time& dt);
     
     private:

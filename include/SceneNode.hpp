@@ -13,6 +13,7 @@
 #include <SFML/Graphics.hpp>
 
 struct Command;
+class CommandQueue;
 
 class SceneNode: public sf::Drawable, public sf::Transformable, private sf::NonCopyable {
     public:
@@ -24,7 +25,7 @@ class SceneNode: public sf::Drawable, public sf::Transformable, private sf::NonC
         void attach_child(Ptr child);
         Ptr dettach_child(const SceneNode& node);
 
-        void update(sf::Time& dt);
+        void update(sf::Time& dt, CommandQueue& commands);
 
         sf::Transform   get_world_transform()   const;
         sf::Vector2f    get_world_position()    const;
@@ -37,8 +38,8 @@ class SceneNode: public sf::Drawable, public sf::Transformable, private sf::NonC
         virtual void draw(sf::RenderTarget& target, sf::RenderStates) const ;
         virtual void draw_current(sf::RenderTarget& target, sf::RenderStates states) const;
 
-        virtual void update_current(sf::Time& dt);
-        void update_children(sf::Time& dt);
+        virtual void update_current(sf::Time& dt, CommandQueue& commands);
+        void update_children(sf::Time& dt, CommandQueue& commands);
 
     private:
         std::vector<Ptr> m_children;

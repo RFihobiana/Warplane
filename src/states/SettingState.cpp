@@ -26,6 +26,8 @@ SettingState::SettingState(StateStack& stack, Context& ctx)
     add_button_label(Player::MoveRight, "Move Right", 100.f);
     add_button_label(Player::MoveLeft, "Move Left", 150.f);
     add_button_label(Player::ShowPosition, "Player Pos", 200.f);
+    add_button_label(Player::Fire, "Fire", 250.f);
+    add_button_label(Player::LaunchMissile, "Launch Missile", 300.f);
 
     // back btn
     GUI::Button::Ptr back(std::make_shared<GUI::Button>(*ctx.textures, *ctx.fonts, "Back"));

@@ -95,6 +95,7 @@ bool Player::is_realtime_action(const Action& action) {
         case MoveRight:
         case MoveUp:
         case MoveDown:
+        case Fire:
             return true;
         
         default: return false;

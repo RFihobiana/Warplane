@@ -11,9 +11,10 @@
 #include <utility>
 #include <algorithm>
 
-SceneNode::SceneNode()
+SceneNode::SceneNode(const Category::Type category)
 : m_children()
-, m_parent(nullptr) {}
+, m_parent(nullptr)
+, m_category(category) {}
 
 void SceneNode::attach_child(SceneNode::Ptr child) {
     child->m_parent = this;
@@ -70,7 +71,7 @@ sf::Vector2f SceneNode::get_world_position() const {
 }
 
 unsigned int SceneNode::get_category() const {
-    return Category::Scene;
+    return m_category;
 }
 
 void SceneNode::on_command(const Command& command, sf::Time& dt) {

@@ -1,5 +1,6 @@
 #include "World.hpp"
 #include "SceneNode.hpp"
+#include "command/Category.hpp"
 #include "command/CommandQueue.hpp"
 #include "entity/Aircraft.hpp"
 #include "entity/SpriteNode.hpp"
@@ -124,7 +125,7 @@ void World::add_enemies() {
 void World::build() {
     // Create Layers
     for(size_t i = 0; i < LayerCount; i++) {
-        SceneNode::Ptr layer(new SceneNode());
+        SceneNode::Ptr layer(new SceneNode(i == Air? Category::SceneAirLayer : Category::Scene));
         m_layers[i] = layer.get();
         m_graph.attach_child(std::move(layer));
     }

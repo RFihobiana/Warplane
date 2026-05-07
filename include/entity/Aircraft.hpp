@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Entity.hpp"
+#include "SceneNode.hpp"
 #include "TextNode.hpp"
+#include "command/Command.hpp"
 #include "command/CommandQueue.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include <SFML/Graphics/RenderStates.hpp>
@@ -31,13 +33,23 @@ class Aircraft: public Entity {
         
         virtual void update_current(sf::Time& dt, CommandQueue& commands);
         void update_movement_pattern(sf::Time& dt);
+
+        void check_projectile_launch(sf::Time& dt, CommandQueue& commands);
+
+        void create_bullets(SceneNode& layer, const TextureHolder& textures);
     
     private:
         Type m_type;
-        const TextureHolder& m_textures;
         sf::Sprite m_sprite;
         TextNode* m_health_display;
 
         float m_travelled_distance;
         size_t m_direction_index;
+
+        bool m_is_firing;
+        bool m_is_launching_missile;
+
+        Command m_fire_command;
+        sf::Time m_fire_count_down;
+        int m_fire_rate_level;
 };

@@ -11,6 +11,7 @@
 #include <memory>
 #include <vector>
 #include <SFML/Graphics.hpp>
+#include "command/Category.hpp"
 
 struct Command;
 class CommandQueue;
@@ -20,7 +21,7 @@ class SceneNode: public sf::Drawable, public sf::Transformable, private sf::NonC
         typedef std::unique_ptr<SceneNode> Ptr;
     
     public:
-        SceneNode();
+        SceneNode(const Category::Type category = Category::Scene);
 
         void attach_child(Ptr child);
         Ptr dettach_child(const SceneNode& node);
@@ -44,4 +45,5 @@ class SceneNode: public sf::Drawable, public sf::Transformable, private sf::NonC
     private:
         std::vector<Ptr> m_children;
         SceneNode* m_parent;
+        Category::Type m_category;
 };

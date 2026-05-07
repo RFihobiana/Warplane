@@ -11,7 +11,7 @@ std::vector<AircraftData> initialize_aircarft_data() {
     std::vector<AircraftData> data(Aircraft::TypeCount);
 
     data[Aircraft::Eagle].hp = 100;
-    data[Aircraft::Eagle].speed = 400;
+    data[Aircraft::Eagle].speed = 300;
     data[Aircraft::Eagle].texture_id = Textures::Eagle;
     
     data[Aircraft::Raptor].hp = 10;
@@ -37,15 +37,15 @@ std::vector<ProjectileData> initialize_projectile_data() {
     std::vector<ProjectileData> data(Projectile::TypeCount);
     
     data[Projectile::AlliedBullet].damage = 10.f;
-    data[Projectile::AlliedBullet].speed = 300;
+    data[Projectile::AlliedBullet].speed = 600;
     data[Projectile::AlliedBullet].texture_id = Textures::Bullet;
     
     data[Projectile::EnemyBullet].damage = 10.f;
-    data[Projectile::EnemyBullet].speed = 300;
+    data[Projectile::EnemyBullet].speed = 600;
     data[Projectile::EnemyBullet].texture_id = Textures::Bullet;
 
     data[Projectile::Missile].damage = 200.f;
-    data[Projectile::Missile].speed = 150;
+    data[Projectile::Missile].speed = 250;
     data[Projectile::Missile].texture_id = Textures::Missile;
 
     return data;

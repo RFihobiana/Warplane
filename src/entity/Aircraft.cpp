@@ -43,6 +43,11 @@ Aircraft::Aircraft(const Aircraft::Type type, const TextureHolder& textures, con
     m_fire_command.action = [this, &textures] (SceneNode& layer, sf::Time& dt) {
         create_bullets(layer, textures);
     };
+
+    m_missile_command.category = Category::SceneAirLayer;
+    m_missile_command.action = [this, &textures] (SceneNode& layer, sf::Time& dt) {
+        create_missile(layer, textures);
+    };
 }
 
 void Aircraft::fire() {
@@ -85,12 +90,19 @@ void Aircraft::update_movement_pattern(sf::Time& dt) {
 }
 
 void Aircraft::check_projectile_launch(sf::Time& dt, CommandQueue& commands) {
+    // Bullet
     if(m_is_firing && m_fire_count_down <= sf::Time::Zero) {
         commands.push_back(m_fire_command);
         m_is_firing = false;
         m_fire_count_down += sf::seconds(1.f / (m_fire_rate_level + 1));
     } else if (m_fire_count_down > sf::Time::Zero) {
         m_fire_count_down -= dt;
+    }
+
+    // Missile
+    if(m_is_launching_missile) {
+        m_is_launching_missile = false;
+        commands.push_back(m_missile_command);
     }
 }
 void Aircraft::create_bullets(SceneNode& layer, const TextureHolder& textures) {
@@ -103,6 +115,12 @@ void Aircraft::create_bullets(SceneNode& layer, const TextureHolder& textures) {
     bullet->setPosition(get_world_position());
 
     layer.attach_child(std::move(bullet));
+}
+
+void Aircraft::create_missile(SceneNode& layer, const TextureHolder& textures) {
+    std::unique_ptr<Projectile> missile(new Projectile(Projectile::Missile, textures));
+    missile->setPosition(get_world_position());
+    layer.attach_child(std::move(missile));
 }
 
 unsigned int Aircraft::get_category() const {

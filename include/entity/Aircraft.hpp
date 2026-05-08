@@ -37,6 +37,7 @@ class Aircraft: public Entity {
         void check_projectile_launch(sf::Time& dt, CommandQueue& commands);
 
         void create_bullets(SceneNode& layer, const TextureHolder& textures);
+        void create_missile(SceneNode& layer, const TextureHolder& textures);
     
     private:
         Type m_type;
@@ -49,7 +50,7 @@ class Aircraft: public Entity {
         bool m_is_firing;
         bool m_is_launching_missile;
 
-        Command m_fire_command;
+        Command m_fire_command, m_missile_command;
         sf::Time m_fire_count_down;
         int m_fire_rate_level;
 };

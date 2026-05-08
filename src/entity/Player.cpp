@@ -50,6 +50,7 @@ Player::Player() {
     });
 
     m_action_binding[Fire].action = derivated<Aircraft>(std::bind(&Aircraft::fire, std::placeholders::_1));
+    m_action_binding[LaunchMissile].action = derivated<Aircraft>(std:: bind(&Aircraft::launch_missile, std::placeholders::_1));
 
     for(auto& pair: m_action_binding) pair.second.category = Category::PlayerAircraft;
 }

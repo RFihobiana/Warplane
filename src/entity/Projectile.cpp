@@ -4,6 +4,7 @@
 #include "entity/Entity.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "utilities.hpp"
+#include <SFML/System/Vector2.hpp>
 #include <vector>
 
 namespace { const std::vector<ProjectileData> Table = initialize_projectile_data(); }
@@ -12,7 +13,12 @@ Projectile::Projectile(const Type type, const TextureHolder& textures)
 : Entity(1)
 , m_type(type)
 , m_sprite(textures.get(Table[type].texture_id)) {
-    set_velocity(0.f, (m_type == EnemyBullet)? Table[m_type].speed : -Table[m_type].speed);
+    sf::Vector2f velocity(0.f, Table[m_type].speed);
+    if(
+        m_type == AlliedBullet 
+        || m_type == Missile    // We assumed here only the player can fire with a missile gun
+    ) velocity.y *= -1;
+    set_velocity(velocity);
     center_origin(m_sprite);
 }
 

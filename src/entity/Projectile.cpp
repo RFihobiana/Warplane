@@ -12,7 +12,7 @@ Projectile::Projectile(const Type type, const TextureHolder& textures)
 : Entity(1)
 , m_type(type)
 , m_sprite(textures.get(Table[type].texture_id)) {
-    set_velocity(0.f, (get_category() == EnemyBullet)? Table[m_type].speed : -Table[m_type].speed);
+    set_velocity(0.f, (m_type == EnemyBullet)? Table[m_type].speed : -Table[m_type].speed);
     center_origin(m_sprite);
 }
 

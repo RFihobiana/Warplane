@@ -29,7 +29,7 @@ Aircraft::Aircraft(const Aircraft::Type type, const TextureHolder& textures, con
 , m_is_firing(false)
 , m_is_launching_missile(false)
 , m_fire_count_down(sf::Time::Zero)
-, m_fire_rate_level(0) {
+, m_fire_rate_level(1) {
     m_sprite.setTexture(textures.get(Table[type].texture_id));
     center_origin(m_sprite);
     
@@ -72,13 +72,13 @@ void Aircraft::update_movement_pattern(sf::Time& dt) {
     
     if(directions.empty()) return; // Player have no direction
 
-    float distance_to_travel = directions[m_direction_index].distance;
+    const float& distance_to_travel = directions[m_direction_index].distance;
     if(distance_to_travel < m_travelled_distance) {
         m_direction_index = (m_direction_index + 1) % directions.size();
         m_travelled_distance = 0.f;
     }
 
-    float radian = to_radian(directions[m_direction_index].angle + 90.f);
+    const float radian = to_radian(directions[m_direction_index].angle + 90.f);
     float speed = Table[m_type].speed;
     set_velocity(speed * sf::Vector2f(std::cos(radian), std::sin(radian)));
     m_travelled_distance += speed * dt.asSeconds();

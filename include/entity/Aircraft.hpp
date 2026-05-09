@@ -27,6 +27,9 @@ class Aircraft: public Entity {
         void fire();
         void launch_missile();
 
+        void set_fire_rate_level(const int rate);
+        int get_fire_rate_level() const;
+
         virtual unsigned int get_category() const;
     
     private:

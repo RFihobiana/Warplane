@@ -41,6 +41,9 @@ Aircraft::Aircraft(const Aircraft::Type type, const TextureHolder& textures, con
     m_health_display = health_node.get();
     attach_child(std::move(health_node));
 
+    if(is_allied())
+        set_fire_rate_level(3);
+    
     m_fire_command.category = Category::SceneAirLayer;
     m_fire_command.action = [this, &textures] (SceneNode& layer, sf::Time& dt) {
         create_bullets(layer, textures);
@@ -59,6 +62,12 @@ void Aircraft::fire() {
 void Aircraft::launch_missile() {
     m_is_launching_missile = true;
 }
+
+void Aircraft::set_fire_rate_level(const int rate) {
+    m_fire_rate_level = rate;
+}
+
+int Aircraft::get_fire_rate_level() const { return m_fire_rate_level; }
 
 void Aircraft::draw_current(sf::RenderTarget& target, sf::RenderStates states) const {
     target.draw(m_sprite, states);

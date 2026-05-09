@@ -13,12 +13,6 @@ Projectile::Projectile(const Type type, const TextureHolder& textures)
 : Entity(1)
 , m_type(type)
 , m_sprite(textures.get(Table[type].texture_id)) {
-    sf::Vector2f velocity(0.f, Table[m_type].speed);
-    if(
-        m_type == AlliedBullet 
-        || m_type == Missile    // We assumed here only the player can fire with a missile gun
-    ) velocity.y *= -1;
-    set_velocity(velocity);
     center_origin(m_sprite);
 }
 

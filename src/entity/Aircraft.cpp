@@ -8,6 +8,7 @@
 #include "entity/Projectile.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include "utilities.hpp"
+#include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/System/Time.hpp>
@@ -29,7 +30,8 @@ Aircraft::Aircraft(const Aircraft::Type type, const TextureHolder& textures, con
 , m_is_firing(false)
 , m_is_launching_missile(false)
 , m_fire_count_down(sf::Time::Zero)
-, m_fire_rate_level(1) {
+, m_fire_rate_level(1)
+, m_spread_level(1) {
     m_sprite.setTexture(textures.get(Table[type].texture_id));
     center_origin(m_sprite);
     
@@ -46,7 +48,7 @@ Aircraft::Aircraft(const Aircraft::Type type, const TextureHolder& textures, con
 
     m_missile_command.category = Category::SceneAirLayer;
     m_missile_command.action = [this, &textures] (SceneNode& layer, sf::Time& dt) {
-        create_missile(layer, textures);
+        create_projectile(layer, textures, Projectile::Missile, 0.f, 0.f);
     };
 }
 
@@ -105,22 +107,48 @@ void Aircraft::check_projectile_launch(sf::Time& dt, CommandQueue& commands) {
         commands.push_back(m_missile_command);
     }
 }
-void Aircraft::create_bullets(SceneNode& layer, const TextureHolder& textures) {
-    std::unique_ptr<Projectile> bullet(new Projectile(
-        get_category() == Category::PlayerAircraft
-        ? Projectile::AlliedBullet
-        : Projectile::EnemyBullet
-    , textures));
-    
-    bullet->setPosition(get_world_position());
 
-    layer.attach_child(std::move(bullet));
+void Aircraft::create_bullets(SceneNode& layer, const TextureHolder& textures) {
+    Projectile::Type type = is_allied()? Projectile::AlliedBullet : Projectile::EnemyBullet;
+
+    switch (m_spread_level) {
+        case 1:
+            create_projectile(layer, textures, type, 0.f, 0.5f);
+            break;
+        
+        case 2:
+            create_projectile(layer, textures, type, -0.30f, 0.30f);
+            create_projectile(layer, textures, type, 0.30f, 0.30f);
+            break;
+
+        default:
+            // Max spread = 3
+            create_projectile(layer, textures, type, -0.5f, 0.30f);
+            create_projectile(layer, textures, type, 0.f, 0.5f);
+            create_projectile(layer, textures, type, 0.5f, 0.30f);
+            break ;
+    }
 }
 
-void Aircraft::create_missile(SceneNode& layer, const TextureHolder& textures) {
-    std::unique_ptr<Projectile> missile(new Projectile(Projectile::Missile, textures));
-    missile->setPosition(get_world_position());
-    layer.attach_child(std::move(missile));
+void Aircraft::create_projectile(
+    SceneNode& layer,
+    const TextureHolder& textures,
+    const Projectile::Type type,
+    const float relx,
+    const float rely
+) {
+    std::unique_ptr<Projectile> projectile(new Projectile(type, textures));
+    const sf::FloatRect global_bounds = m_sprite.getGlobalBounds();
+    const sf::Vector2f velocity(0.f, projectile->get_max_speed());
+    const float sign = is_allied() ? -1.0f : +1.f;
+
+    projectile->setPosition(get_world_position() + sf::Vector2f(relx * global_bounds.width, -rely * global_bounds.height));
+    projectile->set_velocity(velocity * sign);
+    layer.attach_child(std::move(projectile));
+}
+
+bool Aircraft::is_allied() const {
+    return m_type == Eagle;
 }
 
 unsigned int Aircraft::get_category() const {

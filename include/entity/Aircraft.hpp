@@ -5,6 +5,7 @@
 #include "TextNode.hpp"
 #include "command/Command.hpp"
 #include "command/CommandQueue.hpp"
+#include "entity/Projectile.hpp"
 #include "resources/ResourceIdentifier.hpp"
 #include <SFML/Graphics/RenderStates.hpp>
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -37,7 +38,15 @@ class Aircraft: public Entity {
         void check_projectile_launch(sf::Time& dt, CommandQueue& commands);
 
         void create_bullets(SceneNode& layer, const TextureHolder& textures);
-        void create_missile(SceneNode& layer, const TextureHolder& textures);
+        void create_projectile(
+            SceneNode& layer,
+            const TextureHolder& textures,
+            const Projectile::Type type,
+            const float relx,
+            const float rely
+        );
+
+        bool is_allied() const;
     
     private:
         Type m_type;
@@ -49,8 +58,9 @@ class Aircraft: public Entity {
 
         bool m_is_firing;
         bool m_is_launching_missile;
-
+        
         Command m_fire_command, m_missile_command;
         sf::Time m_fire_count_down;
         int m_fire_rate_level;
+        int m_spread_level;
 };

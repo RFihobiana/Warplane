@@ -121,9 +121,9 @@ std::string to_string(const sf::Keyboard::Key key) {
         
 }
 
-float to_radian(const float degree) { return degree * 180.f / std::numbers::pi; }
+float to_radian(const float degree) { return degree * std::numbers::pi / 180.f; }
 
-float to_degree(const float radian) { return radian * std::numbers::pi / 180.f; }
+float to_degree(const float radian) { return radian * 180.f / std::numbers::pi; }
 
 sf::Vector2f normalized(const sf::Vector2f& vector) {
     float distance = sqrtf(powf(vector.x, 2) + powf(vector.y, 2));

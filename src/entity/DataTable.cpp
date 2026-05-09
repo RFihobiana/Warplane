@@ -45,7 +45,7 @@ std::vector<ProjectileData> initialize_projectile_data() {
     data[Projectile::EnemyBullet].texture_id = Textures::Bullet;
 
     data[Projectile::Missile].damage = 200.f;
-    data[Projectile::Missile].speed = 250;
+    data[Projectile::Missile].speed = 350;
     data[Projectile::Missile].texture_id = Textures::Missile;
 
     return data;

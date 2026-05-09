@@ -7,6 +7,7 @@
 #include <SFML/System/Vector2.hpp>
 #include <cassert>
 #include <cmath>
+#include <iostream>
 #include <vector>
 
 namespace { const std::vector<ProjectileData> Table = initialize_projectile_data(); }
@@ -49,13 +50,15 @@ void Projectile::update_current(sf::Time& dt, CommandQueue& commands) {
     if(is_guided()) {
         const float approach_rate = 200.f;
 
-        sf::Vector2f next_velocity(normalized(get_velocity() + m_target_direction * dt.asSeconds() * approach_rate));
-        next_velocity = next_velocity * static_cast<float>(get_max_speed());
+        sf::Vector2f next_velocity(normalized(approach_rate * m_target_direction + get_velocity()));
+        const float max_speed = get_max_speed();
+        next_velocity *= max_speed;
         
-        float angle = std::atan2(next_velocity.y, next_velocity.x);
-        setRotation(to_degree(angle));
+        const float angle = std::atan2(next_velocity.y, next_velocity.x);
+        setRotation(to_degree(angle) + 90);
 
         set_velocity(next_velocity);
+
     }
 
     Entity::update_current(dt, commands);

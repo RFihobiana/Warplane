@@ -148,14 +148,10 @@ float distance(const SceneNode& a, const SceneNode& b) {
 float nearest_scene(const SceneNode& a, const SceneNode& b) {
     sf::Vector2f first_position = a.getPosition();
     sf::Vector2f second_position = b.getPosition();
+
     return
-        std::pow(
-            first_position.x - second_position.x,
-            2
-        ) + 
-        std::pow(
-            first_position.y - second_position.y, 
-        2);
+        (first_position.x - second_position.x) * (first_position.x - second_position.x) + // x**2
+        (first_position.y - second_position.y) * (first_position.y - second_position.y);  // y**2
 }
 
 

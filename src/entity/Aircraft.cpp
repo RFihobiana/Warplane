@@ -71,6 +71,8 @@ void Aircraft::update_current(sf::Time& dt, CommandQueue& commands) {
 
     update_movement_pattern(dt);
 
+    if(!is_allied()) fire();
+    
     check_projectile_launch(dt, commands);
 }
 

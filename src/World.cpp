@@ -27,7 +27,7 @@ World::World(sf::RenderWindow& window, TextureHolder& textures, FontHolder& font
     0.f,
     0.f,
     m_view.getSize().x,
-    4000.f
+    5000.f
 )
 , m_scroll_speed(0.f, -80.f)
 , m_spawn_player(
@@ -99,23 +99,23 @@ void World::add_enemy(const Aircraft::Type type, float relx, float rely) {
 void World::add_enemies() {
     add_enemy(Aircraft::Raptor, 0.f, 500.f);
 
-    add_enemy(Aircraft::Raptor, -80.f, 1200.f);
-    add_enemy(Aircraft::Raptor, 80.f, 1200.f);
+    add_enemy(Aircraft::Raptor, -80.f, 1500.f);
+    add_enemy(Aircraft::Raptor, 80.f, 1500.f);
 
-    add_enemy(Aircraft::Avenger, 200.f, 1800.f);
-    add_enemy(Aircraft::Avenger, 0.f, 1800.f);
-    add_enemy(Aircraft::Avenger, -200.f, 1800.f);
+    add_enemy(Aircraft::Avenger, 200.f, 2500.f);
+    add_enemy(Aircraft::Avenger, 0.f, 2500.f);
+    add_enemy(Aircraft::Avenger, -200.f, 2500.f);
 
-    add_enemy(Aircraft::Avenger, 300.f, 2500.f);
-    add_enemy(Aircraft::Avenger, 100.f, 2500.f);
-    add_enemy(Aircraft::Avenger, -100.f, 2500.f);
-    add_enemy(Aircraft::Avenger, -300.f, 2500.f);
+    add_enemy(Aircraft::Avenger, 300.f, 3500.f);
+    add_enemy(Aircraft::Avenger, 100.f, 3500.f);
+    add_enemy(Aircraft::Avenger, -100.f, 3500.f);
+    add_enemy(Aircraft::Avenger, -300.f, 3500.f);
 
-    add_enemy(Aircraft::Raptor, -80.f, 3100.f);
-    add_enemy(Aircraft::Raptor, 80.f, 3100.f);
-    add_enemy(Aircraft::Avenger, 200.f, 3200.f);
-    add_enemy(Aircraft::Avenger, 0.f, 3200.f);
-    add_enemy(Aircraft::Avenger, -200.f, 3200.f);
+    add_enemy(Aircraft::Avenger, -80.f, 4200.f);
+    add_enemy(Aircraft::Avenger, 80.f, 4200.f);
+    add_enemy(Aircraft::Avenger, 200.f, 4300.f);
+    add_enemy(Aircraft::Avenger, 0.f, 4300.f);
+    add_enemy(Aircraft::Avenger, -200.f, 4200.f);
 
     std::ranges::sort(m_enemy_spawn_points, [](const auto& a, const auto& b) {
         return a.y - b.y;

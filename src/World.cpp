@@ -1,10 +1,13 @@
 #include "World.hpp"
 #include "SceneNode.hpp"
 #include "command/Category.hpp"
+#include "command/Command.hpp"
 #include "command/CommandQueue.hpp"
 #include "entity/Aircraft.hpp"
+#include "entity/Projectile.hpp"
 #include "entity/SpriteNode.hpp"
 #include "resources/ResourceIdentifier.hpp"
+#include "utilities.hpp"
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Texture.hpp>
@@ -14,6 +17,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstddef>
+#include <limits>
 #include <memory>
 #include <utility>
 
@@ -122,6 +126,42 @@ void World::add_enemies() {
     });
 }
 
+void World::guide_missiles() {
+    // Get all active enemies
+    Command enemy_collector;
+    enemy_collector.category = Category::EnemyAircraft;
+    enemy_collector.action = derivated<Aircraft>([this](Aircraft& enemy, sf::Time& dt) {
+        if(!enemy.is_destroyed()) {
+            m_active_enemies.push_back(&enemy);
+        }
+    });
+
+    // Fire the nearest enemy
+    Command missile_guider;
+    missile_guider.category = Category::AlliedProjectile;
+    missile_guider.action = derivated<Projectile>([this](Projectile& projectile, sf::Time& dt) {
+        // Ingore unguided bullets
+        if(!projectile.is_guided()) return;
+
+        float min_distance = std::numeric_limits<float>::max();
+        Aircraft* closest_enemy = nullptr;
+
+        for(Aircraft* enemy: m_active_enemies) {
+            const float enemy_distance = nearest_scene(projectile, *enemy);
+            if(enemy_distance < min_distance) {
+                min_distance = enemy_distance;
+                closest_enemy = enemy;
+            }
+        }
+
+        if(closest_enemy) projectile.guide_towards(closest_enemy->get_world_position());
+
+    });
+
+    m_command_queue.push_back(enemy_collector);
+    m_command_queue.push_back(missile_guider);
+}
+
 void World::build() {
     // Create Layers
     for(size_t i = 0; i < LayerCount; i++) {
@@ -167,6 +207,8 @@ void World::update(sf::Time& dt) {
     while(!m_command_queue.is_empty()) {
         m_graph.on_command(m_command_queue.pop(), dt);
     }
+
+    guide_missiles();
 
     sf::Vector2f velocity(m_player->get_velocity());
     if(velocity.x != 0 && velocity.y != 0) m_player->set_velocity(velocity / std::sqrt(2.f));

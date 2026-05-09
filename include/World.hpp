@@ -37,6 +37,8 @@ class World: public sf::NonCopyable {
         void add_enemy(const Aircraft::Type type, float relx, float rely);
         void add_enemies();
 
+        void guide_missiles();
+
     private:
         enum Layer {
             Background,
@@ -70,6 +72,7 @@ class World: public sf::NonCopyable {
         Aircraft*                           m_player;
         sf::Vector2f        m_spawn_player;
         std::vector<SpawnPoint> m_enemy_spawn_points;
+        std::vector<Aircraft*> m_active_enemies;
 
         CommandQueue m_command_queue;
 

@@ -5,6 +5,8 @@
 #include "resources/ResourceIdentifier.hpp"
 #include "utilities.hpp"
 #include <SFML/System/Vector2.hpp>
+#include <cassert>
+#include <cmath>
 #include <vector>
 
 namespace { const std::vector<ProjectileData> Table = initialize_projectile_data(); }
@@ -12,11 +14,15 @@ namespace { const std::vector<ProjectileData> Table = initialize_projectile_data
 Projectile::Projectile(const Type type, const TextureHolder& textures)
 : Entity(1)
 , m_type(type)
-, m_sprite(textures.get(Table[type].texture_id)) {
+, m_sprite(textures.get(Table[type].texture_id))
+, m_target_direction() {
     center_origin(m_sprite);
 }
 
-void Projectile::guide_towards(sf::Vector2f position) {}
+void Projectile::guide_towards(sf::Vector2f position) {
+    assert(is_guided());
+    m_target_direction = normalized(position - get_world_position());
+}
 
 bool Projectile::is_guided() const {
     return m_type == Missile;
@@ -40,6 +46,18 @@ long long int Projectile::get_max_speed() const { return Table[m_type].speed; }
 float Projectile::get_damage() const { return Table[m_type].damage; }
 
 void Projectile::update_current(sf::Time& dt, CommandQueue& commands) {
+    if(is_guided()) {
+        const float approach_rate = 200.f;
+
+        sf::Vector2f next_velocity(normalized(get_velocity() + m_target_direction * dt.asSeconds() * approach_rate));
+        next_velocity = next_velocity * static_cast<float>(get_max_speed());
+        
+        float angle = std::atan2(next_velocity.y, next_velocity.x);
+        setRotation(to_degree(angle));
+
+        set_velocity(next_velocity);
+    }
+
     Entity::update_current(dt, commands);
 }
 

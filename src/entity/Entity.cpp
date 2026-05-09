@@ -23,7 +23,7 @@ long long int Entity::get_hitpoints() const {
 }
 
 bool Entity::is_destroyed() const {
-    return m_hitpoints >= 0.f;
+    return m_hitpoints <= 0.f;
 }
 
 void Entity::set_velocity(const sf::Vector2f& velocity) {

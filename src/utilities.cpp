@@ -1,5 +1,8 @@
 #include "utilities.hpp"
+#include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Keyboard.hpp>
+#include <cassert>
+#include <cmath>
 #include <numbers>
 #include <string>
 
@@ -118,8 +121,41 @@ std::string to_string(const sf::Keyboard::Key key) {
         
 }
 
-float to_radian(const float degree) { return degree * std::numbers::pi / 180.f;
+float to_radian(const float degree) { return degree * 180.f / std::numbers::pi; }
+
+float to_degree(const float radian) { return radian * std::numbers::pi / 180.f; }
+
+sf::Vector2f normalized(const sf::Vector2f& vector) {
+    float distance = sqrtf(powf(vector.x, 2) + powf(vector.y, 2));
+    assert(distance != 0.f);
+    return vector / distance;
 }
 
-float to_degree(const float radian) { return radian * 180.f / std::numbers::pi; }
+float distance(const SceneNode& a, const SceneNode& b) {
+    sf::Vector2f first_position = a.get_world_position();
+    sf::Vector2f second_position = b.get_world_position();
+    return sqrtf(
+        std::pow(
+            first_position.x - second_position.x,
+            2
+        ) + 
+        std::pow(
+            first_position.y - second_position.y, 
+        2)
+    );
+}
+
+float nearest_scene(const SceneNode& a, const SceneNode& b) {
+    sf::Vector2f first_position = a.getPosition();
+    sf::Vector2f second_position = b.getPosition();
+    return
+        std::pow(
+            first_position.x - second_position.x,
+            2
+        ) + 
+        std::pow(
+            first_position.y - second_position.y, 
+        2);
+}
+
 
